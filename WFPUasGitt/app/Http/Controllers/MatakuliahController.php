@@ -16,7 +16,10 @@ class MatakuliahController extends Controller
     public function index()
     {
          $matakuliahs = Matakuliah::all();
-        return view('Perwalian.index', ['matakuliahs' => $matakuliahs]);
+
+        $name = Request::get('nama');
+        $result = Matakuliah::where('nama','=',$name)->get();
+        return view('Perwalian.index', ['matakuliahs' => $matakuliahs],['result' => $result]);
     }
 
     /**

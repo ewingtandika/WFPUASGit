@@ -23,7 +23,10 @@ Route::get('/gallery', 'PagesController@gallery');
 //Route::post('/simpan-data-kategori', 'KategoriController@store');
 //Route::get('/daftar-kategori', 'KategoriController@index');
 Route::resource('kategoris', 'KategoriController');
+
 Route::resource('perwalian', 'MatakuliahController');
 
 Route::get('/fpp', 'fppcontroller@index');
+
+Route::get('/fppa', 'fppcontroller@store');
 Route::get('/hasilfpp', 'hasilfppcontroller@index');

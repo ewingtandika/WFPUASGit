@@ -168,13 +168,14 @@
 		</div> <!-- /widget -->
 		<br>
 		<div>
-			<form style="margin: 0 auto; width: 570px;">
-				<label style="float: left; margin: 10px;">Nomor MK</label>				
-				<input type="text" name="nmk" class="span2" style="float:left; margin: 10px;">
+			<form method="POST" action="{{url('/fppa')}}" style="margin: 0 auto; width: 570px;">
+			<input type="hidden" name="_token" value="{!! csrf_token() !!}"> 
+			<label style="float: left; margin: 10px;">Nomor MK</label>				
+				<input type="text" name="kode_matkul" class="span2" style="float:left; margin: 10px;">
 				<label style="float: left; margin: 10px;">KP</label>
 				<input type="text" name="kp" class="span1" style="float: left; margin: 10px;">
+
 				<input type="submit" value="Add" class="btn btn-primary" style="float: left; margin: 10px;">
-				<input type="submit" value="Save" class="btn btn-primary" style="margin: 10px;">
 			</form>
 		</div>
 	</div>

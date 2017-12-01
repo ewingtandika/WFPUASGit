@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Matakuliah;
 use App\KelasParalel;
 use App\Mahasiswa;
+use App\Http\Requests\FppFormRequest;
 use App\InputMatakuliah;
 use DB;
 class fppcontroller extends Controller
@@ -36,17 +37,25 @@ class fppcontroller extends Controller
         //
     }
 
+  
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\FppFormRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FppFormRequest $request)
     {
-        //
-    }
+        $kode = Matakuliah::select('id')->where('kode_matkul','=',$request->get('kode_matkul'));
+        $kp = KelasParalel::select('id')->where('kp','=',$request->get('kp')
+            ->where('matakuliah_id','=',$kode));
+        
+        $matkul = new InputMatakuliah(array('mahasiswa_id' => '1','kelasparalel_id'=> $kp,'status'=>'Pending','inputperwalian_id'=> '1'));
+        $matkul->save();
 
+        //print_r( $request->all());
+        
+    }
     /**
      * Display the specified resource.
      *

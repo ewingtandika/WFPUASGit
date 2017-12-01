@@ -127,7 +127,7 @@
 		<div>
 			<form style="margin: 0 auto; width: 570px;">
 				<label style="float: left; margin: 10px;">Cari berdasarkan Nama / Kode</label>				
-				<input type="text" name="namakode" class="span2" style="float:left; margin: 10px;">
+				<input type="text" name="nama" class="span2" style="float:left; margin: 10px;">
 				<input type="submit" value="Cari" class="btn btn-primary" style="margin: 10px;">
 			</form>
 		</div>
@@ -163,6 +163,21 @@
 						<tr>
 							<td colspan="5">yang ini mungkin jadi info halaman</td>
 						</tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 					</tbody>
 				</table>
 			</div> <!-- /widget-content -->
