@@ -132,7 +132,7 @@
 				<h3>FPP 1</h3>
 			</div> 
 			<div class="widget-content">
-				<table class="table table-striped table-bordered">
+				<table class="table table-striped table-bordered" id="tMatkul">
 					<thead>
 						<tr>
 							<th>Nomor MK</th>
@@ -143,16 +143,16 @@
 						</tr>
 					</thead>
 					<tbody>
-						@foreach ($Matakuliah as $key => $Matakuliah)
+						@foreach ($Mahasiswa->KelasParalels as $mk)
 						<tr>
-							<td>{{ $Matakuliah->kode_matkul }}</td>
-							<td>{{ $Matakuliah->nama }}</td>
-							<td>{{ $Matakuliah->kp }}</td>
-							<td>{{ $Matakuliah->jumlah_sks }}</td>
+							<td>{{ $mk->Matakuliah->kode_matkul }}</td>
+							<td>{{ $mk->Matakuliah->nama }}</td>
+							<td>{{ $mk->kp }}</td>
+							<td>{{ $mk->Matakuliah->jumlah_sks}}</td>
 					
 						
 							<td class="td-actions">
-								<a href="javascript:;" class="btn btn-small">
+								<a href="javascript:;" class="btn btn-small" id='{{$mk->id}}' onclick="DeleteKelas(this)">
 									<i class="btn-icon-only icon-remove"></i>										
 								</a>
 							</td>
@@ -168,18 +168,65 @@
 		</div> <!-- /widget -->
 		<br>
 		<div>
-			<form style="margin: 0 auto; width: 570px;">
+			<form style="margin: 0 auto; width: 570px;" >
 				<label style="float: left; margin: 10px;">Nomor MK</label>				
-				<input type="text" name="nmk" class="span2" style="float:left; margin: 10px;">
+				<input type="text" name="nmk" class="span2" id="idmk" style="float:left; margin: 10px;">
 				<label style="float: left; margin: 10px;">KP</label>
-				<input type="text" name="kp" class="span1" style="float: left; margin: 10px;">
-				<input type="submit" value="Add" class="btn btn-primary" style="float: left; margin: 10px;">
-				<input type="submit" value="Save" class="btn btn-primary" style="margin: 10px;">
+				<input type="text" name="kp" class="span1" id="idkp" style="float: left; margin: 10px;">
+				<input type="button" value="Add" onclick="AddKelas()" class="btn btn-primary" style="float: left; margin: 10px;">
+				<input type="button" value="Save" onclick="SaveKelas()" class="btn btn-primary" style="margin: 10px;">
 			</form>
 		</div>
 	</div>
 	<script type="text/javascript">
+	var kelas = new Array();
+	var iduser = 1; // Cari id user, setelah AUTH baru dikerja
+	var idPerwalian = 1; //ini FPP 1 atau 2 atau KK???
 
+	function AddKelas(){
+		 $.ajax({
+                url: "{{ url('/AddMatkul') }}",
+                type: 'POST',
+                data: { mk: $("#idmk").val(), kp:$("#idkp").val(), _token:'{!! csrf_token()!!}'},
+                success: function(response)
+                {
+                	//alert(response['kp']);
+                    var table = document.getElementById("tMatkul");
+				    var row = table.insertRow(-1); //-1 berarti paling bawah
+				    var cell1 = row.insertCell(0);
+				    var cell2 = row.insertCell(1);
+				    var cell3 = row.insertCell(2);
+				    var cell4 = row.insertCell(3);
+				    var cell5 = row.insertCell(4);
+				    cell1.innerHTML = response['kode_matkul'];
+				    cell2.innerHTML = response['nama'];
+				    cell3.innerHTML = response['kp'];
+				    cell4.innerHTML = response['sks'];
+				    cell5.innerHTML = "button";
+		 			kelas.push(["Add",response["kp_id"]]);
+
+                }
+            });
+	}
+	function DeleteKelas(btn) {
+		kelas.push(["Del",$(btn).attr('id')]);
+		//alert(kelas);
+	  var row = btn.parentNode.parentNode;
+	  row.parentNode.removeChild(row);
+	}
+
+	function SaveKelas(){
+		 $.ajax({
+                url: "{{ url('/SaveMatkul') }}",
+                type: 'POST',
+                data: { daftar: kelas,user: iduser,perwalian:idPerwalian, _token:'{!! csrf_token()!!}'},
+                success: function(response)
+                {               
+                	alert(response['response']);
+                	kelas = new Array();
+                }
+            });
+	}
 	</script>
 </body>
 </html>

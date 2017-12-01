@@ -27,6 +27,10 @@ Route::resource('perwalian', 'MatakuliahController');
 
 Route::get('/fpp', 'fppcontroller@index');
 Route::get('/hasilfpp', 'hasilfppcontroller@index');
+Route::post('/CariPerwalian', 'MatakuliahController@find');
+
+Route::post('/AddMatkul','fppcontroller@AddMk');
+Route::post('/SaveMatkul','fppcontroller@SaveMk');
 <<<<<<< HEAD
 
 //punya kresna

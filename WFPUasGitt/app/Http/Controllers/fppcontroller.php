@@ -8,6 +8,7 @@ use App\KelasParalel;
 use App\Mahasiswa;
 use App\InputMatakuliah;
 use DB;
+
 class fppcontroller extends Controller
 {
     /**
@@ -18,13 +19,58 @@ class fppcontroller extends Controller
     public function index()
     {
              $Mahasiswa = Mahasiswa::whereId('1')->firstOrFail();
-        $Matakuliah = Matakuliah::select('kode_matkul','nama', 'kp','jumlah_sks')
-        ->join('kelasparalels','kelasparalels.matakuliah_id','=','matakuliahs.id')->join('inputmatakuliahs','inputmatakuliahs.kelasparalel_id','=','kelasparalels.id')->where('inputmatakuliahs.mahasiswa_id','=','1')
-        ->where('inputmatakuliahs.inputperwalian_id','=','1')->get();
-        return view ('Perwalian.prosesfpp', ['Matakuliah' => $Matakuliah],['Mahasiswa' =>$Mahasiswa]);
+        // $Matakuliah = Matakuliah::select('kode_matkul','nama', 'kp','jumlah_sks','kelasparalels_id as kp_id')
+        // ->join('kelasparalels','kelasparalels.matakuliah_id','=','matakuliahs.id')->join('inputmatakuliahs','inputmatakuliahs.kelasparalel_id','=','kelasparalels.id')->where('inputmatakuliahs.mahasiswa_id','=','1')
+        // ->where('inputmatakuliahs.inputperwalian_id','=','1')->get();
+            // $Matakuliah = InputMatakuliah::where('mahasiswa_id','1')->where('inputperwalian_id','1')->get();
+        return view ('Perwalian.prosesfpp', ['Mahasiswa' =>$Mahasiswa]);
         
 
     }
+
+     /**
+     * Dapat pengirman dari ajax
+     *
+     * @param  \App\Http\Requests\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function AddMk(Request $request)
+    {
+        // $mk = Matakuliah::where('kode_matkul',$request->mk)->firstOrFail();
+            $mk = KelasParalel::join('matakuliahs','kelasparalels.matakuliah_id','=','matakuliahs.id')->where('matakuliahs.kode_matkul',$request->mk)->where('kp',$request->kp)->firstOrFail();
+         //print_r($mk);exit();
+          return response()->json(['kode_matkul' => $mk->Matakuliah->kode_matkul,'nama' => $mk->Matakuliah->nama, 'kp'=>$mk->kp,'sks'=>$mk->Matakuliah->jumlah_sks,'kp_id'=>$mk->id]);
+         //return response()->json(['kp'=>$mk->kode_matkul]);
+    }
+
+    /**
+     * Simpan matkul pengirman dari ajax
+     *
+     * @param  \App\Http\Requests\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function SaveMk(Request $request)
+    {       
+        $data = $request->daftar;
+        $per = $request->perwalian;
+        $id = $request->user;
+
+        foreach ($data as $key => $value) {
+            $kp = $value[1];
+            if($value[0]=="Add")
+            {
+
+                DB::table("inputmatakuliahs")->insert(
+                    ['mahasiswa_id'=>$id,'kelasparalel_id'=>$kp,'status'=>'Pending','inputperwalian_id'=> $per]);
+            }
+            elseif ($value[0] == "Del") {
+                 DB::table("inputmatakuliahs")->where('mahasiswa_id',$request->user)->where('kelasparalel_id',$value[1])->where('inputperwalian_id',$request->perwalian)->delete();
+            }
+        }
+        return response()->json(['response'=>"data telah dimasukkan"]);
+
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -39,7 +85,7 @@ class fppcontroller extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\FppFormRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
