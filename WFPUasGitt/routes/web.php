@@ -27,6 +27,7 @@ Route::resource('perwalian', 'MatakuliahController');
 
 Route::get('/fpp', 'fppcontroller@index');
 Route::get('/hasilfpp', 'hasilfppcontroller@index');
+<<<<<<< HEAD
 
 //punya kresna
 Route::get('/adminpage', 'PagesController@adminpage');
@@ -44,3 +45,6 @@ Route::get('/delete-matkul/{id}', 'AdminController@destroy');
 Route::get('/daftar-barang', 'PagesController@home');
 Route::get('/tambah-data-kategori', 'KategoriController@home');
 Route::post('/simpan-data-kategori', 'KategoriController@store');
+=======
+Route::post('/CariPerwalian', 'MatakuliahController@find');
+>>>>>>> 8e8b80b6bf7fd0a6488e240e1235eedfa670589e
