@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Matakuliah;
 use App\KelasParalel;
 use DB;
+use App\Http\Requests\PerwalianSearchRequest;
+
 class MatakuliahController extends Controller
 {
     /**
@@ -17,6 +19,26 @@ class MatakuliahController extends Controller
     {
          $matakuliahs = Matakuliah::all();
         return view('Perwalian.index', ['matakuliahs' => $matakuliahs]);
+    }
+
+ /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \App\Http\Requests\PerwalianSearchRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function find(PerwalianSearchRequest $request)
+    {
+        $car = $request->get('cari');
+        //$car = 'ai';
+        //$hasil = DB::raw("select * FROM `matakuliahs` WHERE kode_matkul LIKE '%".$car."%' or nama LIKE '%".$car."%'");
+        //echo $hasil;
+        $matakuliahs = Matakuliah::where("nama",'like','%'.$car.'%')->orWhere("kode_matkul",'like','%'.$car.'%')->get();
+
+        //return redirect('Perwalian.index') ->with('matakuliahs', $hasil);
+        return view('Perwalian.index', ['matakuliahs' => $matakuliahs]);
+        //print_r($matakuliahs);exit();
+
     }
 
     /**

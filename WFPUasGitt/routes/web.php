@@ -27,3 +27,4 @@ Route::resource('perwalian', 'MatakuliahController');
 
 Route::get('/fpp', 'fppcontroller@index');
 Route::get('/hasilfpp', 'hasilfppcontroller@index');
+Route::post('/CariPerwalian', 'MatakuliahController@find');
