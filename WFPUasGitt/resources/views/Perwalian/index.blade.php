@@ -125,9 +125,10 @@
 			</div>
 		</div>
 		<div>
-			<form style="margin: 0 auto; width: 570px;">
+			<form style="margin: 0 auto; width: 570px;" method="POST" action="{{ url('/CariPerwalian') }}">
+				<input type="hidden" name="_token" value="{!! csrf_token()!!}"/> 
 				<label style="float: left; margin: 10px;">Cari berdasarkan Nama / Kode</label>				
-				<input type="text" name="namakode" class="span2" style="float:left; margin: 10px;">
+				<input type="text" name="cari" class="span2" style="float:left; margin: 10px;">
 				<input type="submit" value="Cari" class="btn btn-primary" style="margin: 10px;">
 			</form>
 		</div>
