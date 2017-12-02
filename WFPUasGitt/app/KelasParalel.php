@@ -11,15 +11,15 @@ class Kelasparalel extends Model
     {
     	return $this->hasMany('App\Jadwalmatakuliah');
     }
-    public function Inputmatakuliahs()
+    public function Mahasiswas()
     {
-    	return $this->hasMany('App\Inputmatakuliah');
+    	return $this->belongsToMany('App\Mahasiswa','inputmatakuliahs');
     }
-     public function Matakuliahs()
+     public function Matakuliah()
     {
     	return $this->belongsTo('App\Matakuliah');
     }
-     public function Dosens()
+     public function Dosen()
     {
     	return $this->belongsTo('App\Dosen');
     }

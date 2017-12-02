@@ -10,6 +10,17 @@ use App\Http\Requests\PerwalianSearchRequest;
 
 class MatakuliahController extends Controller
 {
+
+  /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,10 +29,10 @@ class MatakuliahController extends Controller
     public function index()
     {
          $matakuliahs = Matakuliah::all();
-        return view('Perwalian.index', ['matakuliahs' => $matakuliahs]);
+        return view('content.informasimatakuliah', ['matakuliahs' => $matakuliahs]);
     }
 
- /**
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\PerwalianSearchRequest $request
@@ -36,7 +47,7 @@ class MatakuliahController extends Controller
         $matakuliahs = Matakuliah::where("nama",'like','%'.$car.'%')->orWhere("kode_matkul",'like','%'.$car.'%')->get();
 
         //return redirect('Perwalian.index') ->with('matakuliahs', $hasil);
-        return view('Perwalian.index', ['matakuliahs' => $matakuliahs]);
+        return view('content.informasimatakuliah', ['matakuliahs' => $matakuliahs]);
         //print_r($matakuliahs);exit();
 
     }

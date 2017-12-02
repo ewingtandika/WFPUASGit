@@ -7,8 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Mahasiswa extends Model
 {
    protected $guarded = ['id'];
-    public function Inputmatakuliahs()
+    public function KelasParalels()
     {
-    	return $this->hasMany('App\Inputmatakuliah');
+    	return $this->belongsToMany('App\KelasParalel','inputmatakuliahs')->withPivot('status');
+    }
+     public function user()
+    {
+        return $this->belongsTo('App\User');
     }
 }

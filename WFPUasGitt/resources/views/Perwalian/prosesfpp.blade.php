@@ -210,7 +210,7 @@
 	}
 	function DeleteKelas(btn) {
 		kelas.push(["Del",$(btn).attr('id')]);
-		//alert(kelas);
+		alert(kelas);
 	  var row = btn.parentNode.parentNode;
 	  row.parentNode.removeChild(row);
 	}

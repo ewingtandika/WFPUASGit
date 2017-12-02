@@ -8,9 +8,21 @@ use App\KelasParalel;
 use App\Mahasiswa;
 use App\InputMatakuliah;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class fppcontroller extends Controller
 {
+
+  /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,12 +30,13 @@ class fppcontroller extends Controller
      */
     public function index()
     {
-             $Mahasiswa = Mahasiswa::whereId('1')->firstOrFail();
+         //{{ Auth::user()->name }} 
+             $Mahasiswa = Mahasiswa::where('user_id',Auth::user()->id)->firstOrFail();
         // $Matakuliah = Matakuliah::select('kode_matkul','nama', 'kp','jumlah_sks','kelasparalels_id as kp_id')
         // ->join('kelasparalels','kelasparalels.matakuliah_id','=','matakuliahs.id')->join('inputmatakuliahs','inputmatakuliahs.kelasparalel_id','=','kelasparalels.id')->where('inputmatakuliahs.mahasiswa_id','=','1')
         // ->where('inputmatakuliahs.inputperwalian_id','=','1')->get();
             // $Matakuliah = InputMatakuliah::where('mahasiswa_id','1')->where('inputperwalian_id','1')->get();
-        return view ('Perwalian.prosesfpp', ['Mahasiswa' =>$Mahasiswa]);
+        return view ('content.prosesfpp1', ['Mahasiswa' =>$Mahasiswa]);
         
 
     }
@@ -53,7 +66,7 @@ class fppcontroller extends Controller
     {       
         $data = $request->daftar;
         $per = $request->perwalian;
-        $id = $request->user;
+        $id = Auth::user()->Mahasiswa->id;
 
         foreach ($data as $key => $value) {
             $kp = $value[1];
@@ -64,7 +77,7 @@ class fppcontroller extends Controller
                     ['mahasiswa_id'=>$id,'kelasparalel_id'=>$kp,'status'=>'Pending','inputperwalian_id'=> $per]);
             }
             elseif ($value[0] == "Del") {
-                 DB::table("inputmatakuliahs")->where('mahasiswa_id',$request->user)->where('kelasparalel_id',$value[1])->where('inputperwalian_id',$request->perwalian)->delete();
+                 DB::table("inputmatakuliahs")->where('mahasiswa_id',$id)->where('kelasparalel_id',$value[1])->where('inputperwalian_id',$request->perwalian)->delete();
             }
         }
         return response()->json(['response'=>"data telah dimasukkan"]);
@@ -85,7 +98,7 @@ class fppcontroller extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\FppFormRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)

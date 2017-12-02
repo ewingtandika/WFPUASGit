@@ -11,4 +11,8 @@ class Dosen extends Model
     {
     	return $this->hasMany('App\Kelasparalel');
     }
+     public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

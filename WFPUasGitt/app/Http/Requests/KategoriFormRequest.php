@@ -24,7 +24,7 @@ class KategoriFormRequest extends FormRequest
     public function rules()
     {
         return [
-        'nama' => 'required|unique:kategoris|min:5',
+        'nama' => 'required|unique:kategoris|min:3',
         'deskripsi' =>'required|min:10'
        
         ];

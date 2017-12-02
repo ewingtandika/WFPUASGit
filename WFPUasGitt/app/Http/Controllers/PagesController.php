@@ -7,11 +7,20 @@ use DB;
 
 class PagesController extends Controller
 {
+  /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function home()
     {
-        $barang = DB::table('barangs')->where('nama', 'cola')->first();
-        $coba = 'ini adalah percobaan';
-        return view('pages.home', ['dataBarangs' => $barang, 'dataCoba' => $coba]);
+        $kategoris = DB::table('kategoris')->get();
+        return view('pages.home', ['datakategoris'=>$kategoris]);
     }
     public function daftarbarang()
     {
@@ -28,22 +37,6 @@ class PagesController extends Controller
             $arrData[$dataKu->nama_kategori][] = $dataKu->nama_barang;
         }
         return view ('daftarbarang', ['arrData' => $arrData]);
-    }
-
-     public function adminpage()
-    {
-        //
-        return view('pages.adminpage');
-    }
-    public function tambahkelaspage()
-    {
-        //
-        return view('pages.tambahkelaspage');
-    }
-    public function admininputperwalian()
-    {
-        //
-        return view('pages.admininputperwalian');
     }
     public function profile()
     {
@@ -85,22 +78,15 @@ class PagesController extends Controller
         //
     }
 
- 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-     public function store(TambahKelasFormRequest $request)
+    public function store(Request $request)
     {
         //
-        $kategori = new Matakuliah(array(
-                'nama' => $request->get('nama'),
-                'deskripsi' => $request->get('deskripsi')
-            ));
-        $kategori->save();
-        return redirect('/admincp');
     }
 
     /**

@@ -14,9 +14,7 @@ class MahasiswasTableSeeder extends Seeder
         $faker = faker::create();
         foreach (range(1,15) as $index) {
         	DB::table('mahasiswas')->insert([
-        		'nrp'=> $faker->numberBetween($min =160415001,$max = 160415999),
-        		'nama'=>$faker->name,
-        		'password'=>bcrypt('rahasia'),
+        		'nrp'=> $faker->unique()->numberBetween($min =160415001,$max = 160415020),
         		'ips'=>$faker->randomFloat($nbMaxDecimals = 2, $min = 1.75, $max = 4),
         		'ipk'=>$faker->randomFloat($nbMaxDecimals = 2, $min = 1.75, $max = 4),
         		'sks'=>$faker->numberBetween($min =18,$max = 24),
