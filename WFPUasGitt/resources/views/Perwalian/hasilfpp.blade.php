@@ -19,7 +19,7 @@
 			</div>
 			<div style="text-align: left; width: 49%; display: inline-block;">
 					<b>{{ $Mahasiswa->nrp }}<br>
-			{{ $Mahasiswa->nama }}<br>
+						{{ Auth::user()->name}}<br>
 				24</b>
 			</div>
 		</div>
@@ -77,7 +77,16 @@
 						</tr>
 					</thead>
 					<tbody>
-						
+						@foreach ($fpp2 as $key => $fpp2)
+						<tr>
+							<td>{{ $fpp2->kode_matkul }}</td>
+							<td>{{ $fpp2->nama }}</td>
+							<td>{{ $fpp2->kp }}</td>
+							<td>{{ $fpp2->jumlah_sks }}</td>
+							<td>{{ $fpp2->status }}</td>
+							
+						</tr>
+						@endforeach
 					
 					
 						<tr>
@@ -106,6 +115,16 @@
 						</tr>
 					</thead>
 					<tbody>
+						@foreach ($kk as $key => $kk)
+						<tr>
+							<td>{{ $kk->kode_matkul }}</td>
+							<td>{{ $kk->nama }}</td>
+							<td>{{ $kk->kp }}</td>
+							<td>{{ $kk->jumlah_sks }}</td>
+							<td>{{ $kk->status }}</td>
+							
+						</tr>
+						@endforeach
 							<td colspan="3" style="text-align: center;">Jumlah SKS</td>
 							<td colspan="2" style="text-align: center;">10</td>
 						</tr>

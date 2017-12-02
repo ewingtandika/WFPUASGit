@@ -55,7 +55,7 @@ class AdminKelasController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function listMatkul()
+    public function list()
     {
         $listkelass = Kelasparalel::all();
         return view('pages.adminlistkelas', ['listkelass'=> $listkelass]);

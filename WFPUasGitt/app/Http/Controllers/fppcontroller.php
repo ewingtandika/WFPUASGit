@@ -7,6 +7,7 @@ use App\Matakuliah;
 use App\KelasParalel;
 use App\Mahasiswa;
 use App\InputMatakuliah;
+use App\Inputperwalian;
 use DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,12 +32,20 @@ class fppcontroller extends Controller
     public function index()
     {
          //{{ Auth::user()->name }} 
-             $Mahasiswa = Mahasiswa::where('user_id',Auth::user()->id)->firstOrFail();
+            $Mahasiswa = Mahasiswa::where('user_id',Auth::user()->id)->firstOrFail();
+            $perwalian = InputPerwalian::where('status','Proses')->first();
+            if($perwalian === null){
+                $id_perwalian = [-1,''];
+            }
+            else{
+                $id_perwalian = [$perwalian->id,$perwalian->nama];
+            }
+
         // $Matakuliah = Matakuliah::select('kode_matkul','nama', 'kp','jumlah_sks','kelasparalels_id as kp_id')
         // ->join('kelasparalels','kelasparalels.matakuliah_id','=','matakuliahs.id')->join('inputmatakuliahs','inputmatakuliahs.kelasparalel_id','=','kelasparalels.id')->where('inputmatakuliahs.mahasiswa_id','=','1')
         // ->where('inputmatakuliahs.inputperwalian_id','=','1')->get();
             // $Matakuliah = InputMatakuliah::where('mahasiswa_id','1')->where('inputperwalian_id','1')->get();
-        return view ('content.prosesfpp1', ['Mahasiswa' =>$Mahasiswa]);
+        return view ('content.prosesfpp1', ['Mahasiswa' =>$Mahasiswa],['id_perwalian'=> $id_perwalian]);
         
 
     }

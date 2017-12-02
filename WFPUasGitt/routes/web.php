@@ -45,7 +45,27 @@ Route::get('/mainmahasiswa', function () {
 Route::resource('perwalian', 'MatakuliahController');
 Route::get('/fpp', 'fppcontroller@index');
 Route::get('/hasilfpp', 'hasilfppcontroller@index');
+Route::get('/update-perwalian','InputPerwalianController@tampil');
 
 Route::post('/CariPerwalian', 'MatakuliahController@find');
 Route::post('/AddMatkul','fppcontroller@AddMk');
 Route::post('/SaveMatkul','fppcontroller@SaveMk');
+Route::post('/update-perwalian','InputPerwalianController@ubah');
+
+
+
+//Kresna
+Route::get('/adminpage', 'PagesController@adminpage');
+Route::get('/tambah-kelas', 'PagesController@tambahkelaspage');
+Route::get('/admin-listkelas', 'AdminKelasController@listMatkul');
+Route::get('/delete-kelas/{id}', 'AdminKelasController@destroy');
+Route::get('/admin-inputperwalian', 'PagesController@admininputperwalian');
+Route::get('/list-perwalian', 'InputPerwalianController@listMatkul');
+Route::get('/delete-perwalian/{id}', 'InputPerwalianController@destroy');
+Route::get('/list-matkul', 'AdminController@listMatkul');
+Route::get('/delete-matkul/{id}', 'AdminController@destroy');
+
+Route::post('/simpan-data-kategori', 'KategoriController@store');
+Route::post('/simpan-inputperwalian', 'InputPerwalianController@store');
+Route::post('/simpan-kelas', 'AdminKelasController@store');
+Route::post('/simpan-matkul', 'AdminController@store');

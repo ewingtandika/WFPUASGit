@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\TambahClassFormRequest;
-use App\Kelasparalel;
+use App\Http\Requests\TambahKelasFormRequest;
+use App\Matakuliah;
 
-class AdminKelasController extends Controller
+class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,25 +27,28 @@ class AdminKelasController extends Controller
     {
         //
         
+        
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\TambahClassFormRequest;  $request
+     * @param  \App\Http\Requests\TambahKelasFormRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TambahClassFormRequest $request)
+    public function store(TambahKelasFormRequest $request)
     {
         //
-        $tambahkelas = new KelasParalel(array(
-            'kp' => $request->get('kp'),
-            'kapasitas' => $request->get('kapasitas'),
-            'matakuliah_id' =>$request->get('matakuliah_id'),
-            'dosen_id' =>$request->get('dosen_id')
+        
+     $tambahkelas = new Matakuliah(array(
+            'kode_matkul' => $request->get('kode_matkul'),
+            'nama' => $request->get('nama'),
+            'jumlah_sks' =>$request->get('jumlah_sks'),
+            'semester' =>$request->get('semester')
             ));
         $tambahkelas->save();
-       return $request->all();
+       return view('pages.adminpage');
+
     }
 
     /**
@@ -54,17 +57,18 @@ class AdminKelasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
     public function listMatkul()
     {
-        $listkelass = Kelasparalel::all();
-        return view('pages.adminlistkelas', ['listkelass'=> $listkelass]);
+        //
+        $listmatkuls = Matakuliah::all();
+        return view('pages.adminpagelist', ['listmatkul'=> $listmatkuls]);
     }
 
     public function show($id)
     {
         //
-        
+        $showmatkuls = Matakuliah::all();
+        return view('pages.adminpageshow', ['showmatkul'=> $showmatkuls]);
     }
 
     /**
@@ -99,8 +103,9 @@ class AdminKelasController extends Controller
     public function destroy($id)
     {
         //
-        Kelasparalel::where('id', $id)->delete();
-        $listkelass = Kelasparalel::all();
-        return view('pages.adminlistkelas', ['listkelass'=> $listkelass]);
+        Matakuliah::where('id', $id)->delete();
+        $listmatkuls = Matakuliah::all();
+        return view('pages.adminpagelist', ['listmatkul'=> $listmatkuls]);
+        //return $id;
     }
 }

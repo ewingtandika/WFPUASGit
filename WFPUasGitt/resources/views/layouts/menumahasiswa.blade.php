@@ -81,7 +81,15 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                            Logout
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -114,9 +122,30 @@
                         <li>
                             <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Home</a>
                         </li>
-                        <li>
+                        
+                        @if ((Auth::user()->Dosen))
+                            <li>
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i>Matakuliah yang diajarkan</a>
+                            </li>
+                        @elseif((Auth::user()->Mahasiswa))
+                            <li>
                             <a href="{{ url('/fpp') }}"><i class="fa fa-table fa-fw"></i> Daftar Kelas Mata Kuliah</a>
-                        </li>
+                            </li>
+                             <li>
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Transkrip</a>
+                            </li>
+                            <li>
+                                <a href="hasilfpp"><i class="fa fa-sitemap fa-fw"></i> Histori Perwalian</a>
+                            </li>
+                        @elseif((Auth::user()->Administrasi))
+                            <li>
+                            <a href="{{ url('/fpp1') }}"><i class="fa fa-table fa-fw"></i> Register Mahasiswa / Dosen</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-wrench fa-fw"></i>Pengaturan FPP</a>
+                            </li>
+                        @endif
+                        
                         <li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Jadwal Mata Kuliah<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -132,12 +161,7 @@
                         <li>
                             <a href="{{ url('/informasimatakuliah') }}"><i class="fa fa-edit fa-fw"></i> Informasi Mata Kuliah</a>
                         </li>
-                        <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Transkrip</a>
-                        </li>
-                        <li>
-                            <a href="hasilfpp"><i class="fa fa-sitemap fa-fw"></i> Histori Perwalian</a>
-                        </li>
+                       
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

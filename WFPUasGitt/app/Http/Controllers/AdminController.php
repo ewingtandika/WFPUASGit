@@ -57,7 +57,7 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function list()
+    public function listMatkul()
     {
         //
         $listmatkuls = Matakuliah::all();

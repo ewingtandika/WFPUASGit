@@ -16,8 +16,9 @@ class CreateInputperwaliansTable extends Migration
         Schema::create('inputperwalians', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nama');
-            $table->date('tanggal_mulai');
-            $table->date('tanggal_selesai');
+            $table->datetime('tanggal_mulai');
+            $table->datetime('tanggal_selesai');
+            $table->string('status');
             $table->timestamps();
         });
     }

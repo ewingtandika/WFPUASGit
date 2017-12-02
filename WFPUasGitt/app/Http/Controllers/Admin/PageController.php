@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\TambahClassFormRequest;
-use App\Kelasparalel;
 
-class AdminKelasController extends Controller
+class PageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,6 +16,11 @@ class AdminKelasController extends Controller
         //
     }
 
+    public function admincp()
+    {
+        return view('pages.admincp');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -26,26 +29,17 @@ class AdminKelasController extends Controller
     public function create()
     {
         //
-        
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\TambahClassFormRequest;  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TambahClassFormRequest $request)
+    public function store(Request $request)
     {
         //
-        $tambahkelas = new KelasParalel(array(
-            'kp' => $request->get('kp'),
-            'kapasitas' => $request->get('kapasitas'),
-            'matakuliah_id' =>$request->get('matakuliah_id'),
-            'dosen_id' =>$request->get('dosen_id')
-            ));
-        $tambahkelas->save();
-       return $request->all();
     }
 
     /**
@@ -54,17 +48,9 @@ class AdminKelasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-    public function listMatkul()
-    {
-        $listkelass = Kelasparalel::all();
-        return view('pages.adminlistkelas', ['listkelass'=> $listkelass]);
-    }
-
     public function show($id)
     {
         //
-        
     }
 
     /**
@@ -99,8 +85,5 @@ class AdminKelasController extends Controller
     public function destroy($id)
     {
         //
-        Kelasparalel::where('id', $id)->delete();
-        $listkelass = Kelasparalel::all();
-        return view('pages.adminlistkelas', ['listkelass'=> $listkelass]);
     }
 }

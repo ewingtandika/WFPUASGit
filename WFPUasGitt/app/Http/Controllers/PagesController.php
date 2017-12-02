@@ -57,6 +57,22 @@ class PagesController extends Controller
     {
         return view('rumah');
     }
+    
+     public function adminpage()
+    {
+        //
+        return view('pages.adminpage');
+    }
+    public function tambahkelaspage()
+    {
+        //
+        return view('pages.tambahkelaspage');
+    }
+    public function admininputperwalian()
+    {
+        //
+        return view('pages.admininputperwalian');
+    }
 
     /**
      * Display a listing of the resource.
@@ -84,9 +100,15 @@ class PagesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TambahKelasFormRequest $request)
     {
         //
+        $kategori = new Matakuliah(array(
+                'nama' => $request->get('nama'),
+                'deskripsi' => $request->get('deskripsi')
+            ));
+        $kategori->save();
+        return redirect('/admincp');
     }
 
     /**

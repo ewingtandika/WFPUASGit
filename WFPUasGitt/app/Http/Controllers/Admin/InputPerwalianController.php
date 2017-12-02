@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\InputPerwalianFormRequest;
 use App\Inputperwalian;
-use DB;
 
 class InputPerwalianController extends Controller
 {
@@ -17,57 +16,6 @@ class InputPerwalianController extends Controller
     public function index()
     {
         //
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function tampil()
-    {
-        $perwalian = InputPerwalian::where('status','Belum')->orWhere('status','Proses')->firstOrFail();
-        if($perwalian->status == 'Belum')
-        {
-            $wrd = 'Ubah Status Menjadi Proses';
-        }
-        else{
-            $wrd="Ubah Status Menjadi Selesai";
-        }
-        $listperwalians = Inputperwalian::all();
-
-        return view('Perwalian.masterperwalian',compact('perwalian','wrd','listperwalians'));
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function ubah()
-    {
-        $perwalian = InputPerwalian::where('status','Belum')->orWhere('status','Proses')->firstOrFail();
-        if($perwalian->status == 'Belum')
-        {
-            $perwalian->status = 'Proses';
-            $wrd="Ubah Status Menjadi Selesai";
-            $perwalian->save();
-        }
-        elseif ($perwalian->status == 'Proses') {
-            $wrd ='';
-           if($perwalian->id <=2){
-            DB::select('call spSeleksiMatkul('.$perwalian->id.')');
-           $wrd = 'Ubah Status Menjadi Proses';
-           }
-           
-           $perwalian->status = "Selesai";
-            $perwalian->save();
-            $perwalian = InputPerwalian::where('status','Belum')->orWhere('status','Proses')->firstOrFail();
-           
-        }
-        $listperwalians = Inputperwalian::all();
-        return view('Perwalian.masterperwalian',compact('perwalian','wrd','listperwalians'));
-
     }
 
     /**
@@ -93,13 +41,11 @@ class InputPerwalianController extends Controller
             'nama' => $request->get('nama'),
             'tanggal_mulai' => $request->get('tanggal_mulai'),
             'tanggal_selesai' =>$request->get('tanggal_selesai'),
-            'status'=>'Belum',
             ));
         $tambahperwalian->save();
        return $request->all();
     }
-
-    public function listMatkul()
+    public function list()
     {
         $listperwalians = Inputperwalian::all();
         return view('pages.adminlistperwalian', ['listperwalians'=> $listperwalians]);

@@ -9,7 +9,7 @@ class Mahasiswa extends Model
    protected $guarded = ['id'];
     public function KelasParalels()
     {
-    	return $this->belongsToMany('App\KelasParalel','inputmatakuliahs')->withPivot('status');
+    	return $this->belongsToMany('App\KelasParalel','inputmatakuliahs')->withPivot('status','inputperwalian_id');
     }
      public function user()
     {

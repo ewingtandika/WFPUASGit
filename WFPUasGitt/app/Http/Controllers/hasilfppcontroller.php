@@ -8,6 +8,8 @@ use App\KelasParalel;
 use App\Mahasiswa;
 use App\InputMatakuliah;
 use DB;
+use Illuminate\Support\Facades\Auth;
+
 class hasilfppcontroller extends Controller
 {
 
@@ -29,17 +31,18 @@ class hasilfppcontroller extends Controller
     public function index()
     {
         
-          $Mahasiswa = Mahasiswa::whereId('1')->firstOrFail();
+            $Mahasiswa = Mahasiswa::where('user_id',Auth::user()->id)->firstOrFail();
+          
         $fpp1 = Matakuliah::select('kode_matkul','nama', 'kp','jumlah_sks','status')
-        ->join('kelasparalels','kelasparalels.matakuliah_id','=','matakuliahs.id')->join('inputmatakuliahs','inputmatakuliahs.kelasparalel_id','=','kelasparalels.id')->where('inputmatakuliahs.mahasiswa_id','=','1')
+        ->join('kelasparalels','kelasparalels.matakuliah_id','=','matakuliahs.id')->join('inputmatakuliahs','inputmatakuliahs.kelasparalel_id','=','kelasparalels.id')->where('inputmatakuliahs.mahasiswa_id','=',$Mahasiswa->id)
         ->where('inputmatakuliahs.inputperwalian_id','=','1')->get();
          $fpp2 = Matakuliah::select('kode_matkul','nama', 'kp','jumlah_sks','status')
-        ->join('kelasparalels','kelasparalels.matakuliah_id','=','matakuliahs.id')->join('inputmatakuliahs','inputmatakuliahs.kelasparalel_id','=','kelasparalels.id')->where('inputmatakuliahs.mahasiswa_id','=','1')
+        ->join('kelasparalels','kelasparalels.matakuliah_id','=','matakuliahs.id')->join('inputmatakuliahs','inputmatakuliahs.kelasparalel_id','=','kelasparalels.id')->where('inputmatakuliahs.mahasiswa_id','=',$Mahasiswa->id)
         ->where('inputmatakuliahs.inputperwalian_id','=','2')->get();
          $kk = Matakuliah::select('kode_matkul','nama', 'kp','jumlah_sks','status')
-        ->join('kelasparalels','kelasparalels.matakuliah_id','=','matakuliahs.id')->join('inputmatakuliahs','inputmatakuliahs.kelasparalel_id','=','kelasparalels.id')->where('inputmatakuliahs.mahasiswa_id','=','1')
+        ->join('kelasparalels','kelasparalels.matakuliah_id','=','matakuliahs.id')->join('inputmatakuliahs','inputmatakuliahs.kelasparalel_id','=','kelasparalels.id')->where('inputmatakuliahs.mahasiswa_id','=',$Mahasiswa->id)
         ->where('inputmatakuliahs.inputperwalian_id','=','3')->get();
-        return view ('Perwalian.hasilfpp', ['fpp1' => $fpp1],['Mahasiswa' =>$Mahasiswa]);
+        return view ('Perwalian.hasilfpp',compact('Mahasiswa','fpp1','fpp2','kk'));
     }
 
     /**

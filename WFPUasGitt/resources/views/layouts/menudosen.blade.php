@@ -81,7 +81,15 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                            Logout
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -115,7 +123,7 @@
                             <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Home</a>
                         </li>
                         <li>
-                            <a href="{{ url('/fpp1') }}"><i class="fa fa-table fa-fw"></i> Daftar Matakuliah</a>
+                            <a href="{{ url('/perwalian') }}"><i class="fa fa-table fa-fw"></i> Daftar Matakuliah</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i>Matakuliah yang diajarkan</a>

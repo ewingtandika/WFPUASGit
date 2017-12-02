@@ -20,7 +20,7 @@
 				Jumlah SKS maksimum yang dapat diambil:
 			</div>
 			<div style="text-align: left; width: 49%; display: inline-block;">
-				<b>{{ $Mahasiswa->nrp }}<br>
+				<b>{{ $Mahasiswa->nrp .'('.$Mahasiswa->id}}<br>
 					{{ Auth::user()->name}}<br>
 				24</b>
 			</div>
@@ -28,7 +28,7 @@
 		<div class="widget stacked widget-table action-table">
 			<div class="widget-header" style="text-align: center;">
 				<!-- <i class="icon-th-list"></i> -->
-				<h3>FPP 1</h3>
+				<h3>{{$id_perwalian[1]}}</h3>
 			</div> 
 			<div class="widget-content">
 				<table class="table table-striped table-bordered" id="tMatkul">
@@ -49,12 +49,15 @@
 							<td>{{ $mk->kp }}</td>
 							<td>{{ $mk->Matakuliah->jumlah_sks}}</td>
 					
-						
-							<td class="td-actions">
-								<a href="javascript:;" class="btn btn-small" id='{{$mk->id}}' onclick="DeleteKelas(this)">
-									<i class="btn-icon-only icon-remove"></i>										
-								</a>
-							</td>
+								<td class="td-actions">
+								@if($mk->pivot->inputperwalian_id == $id_perwalian[0])
+							
+									<a href="javascript:;" class="btn btn-small" id='{{$mk->id}}' onclick="DeleteKelas(this)">
+										<i class="btn-icon-only icon-remove"></i>										
+									</a>
+								@endif
+
+								</td>
 						</tr>
 					@endforeach
 						<tr>
@@ -67,6 +70,8 @@
 		</div> <!-- /widget -->
 		<br>
 		<div>
+			@if($id_perwalian[0]>0)
+
 			<form style="margin: 0 auto; width: 570px;" >
 				<label style="float: left; margin: 10px;">Nomor MK</label>				
 				<input type="text" name="mk" class="span2" id="idmk" style="float:left; margin: 10px;">
@@ -75,6 +80,7 @@
 				<input type="button" value="Add" onclick="AddKelas()" class="btn btn-primary" style="float: left; margin: 10px;">
 				<input type="button" value="Save" onclick="SaveKelas()" class="btn btn-primary" style="margin: 10px;">
 			</form>
+			@endif
 		</div>
 	</div>
 </div>
@@ -82,7 +88,7 @@
 <script type="text/javascript">
 	var kelas = new Array();
 	//var iduser = 1; // Cari id user, setelah AUTH baru dikerja
-	var idPerwalian = 1; //ini FPP 1 atau 2 atau KK???
+	var idPerwalian = {{$id_perwalian[0]}}; //ini FPP 1 atau 2 atau KK???
 
 	function AddKelas(){
 		 $.ajax({
