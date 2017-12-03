@@ -42,6 +42,7 @@ Route::get('/mainmahasiswa', 'InputPerwalianController@beranda');
 
 Route::resource('perwalian', 'MatakuliahController');
 Route::get('/fpp', 'fppcontroller@index');
+Route::post('/FindKp','fppcontroller@cariKpajax');
 Route::get('/hasilfpp', 'hasilfppcontroller@index');
 Route::get('/update-perwalian','InputPerwalianController@tampil');
 

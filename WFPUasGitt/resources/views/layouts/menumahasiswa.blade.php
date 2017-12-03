@@ -10,7 +10,7 @@
     <meta name="author" content="">
 
     <title>Perwalian Fakultas Teknik UBAYA</title>
-
+    
     <!-- Bootstrap Core CSS -->
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 

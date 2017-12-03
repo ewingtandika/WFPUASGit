@@ -40,14 +40,28 @@ class fppcontroller extends Controller
             else{
                 $id_perwalian = [$perwalian->id,$perwalian->nama];
             }
+            $Matakuliah = Matakuliah::all();
 
         // $Matakuliah = Matakuliah::select('kode_matkul','nama', 'kp','jumlah_sks','kelasparalels_id as kp_id')
         // ->join('kelasparalels','kelasparalels.matakuliah_id','=','matakuliahs.id')->join('inputmatakuliahs','inputmatakuliahs.kelasparalel_id','=','kelasparalels.id')->where('inputmatakuliahs.mahasiswa_id','=','1')
         // ->where('inputmatakuliahs.inputperwalian_id','=','1')->get();
             // $Matakuliah = InputMatakuliah::where('mahasiswa_id','1')->where('inputperwalian_id','1')->get();
-        return view ('content.prosesfpp1', ['Mahasiswa' =>$Mahasiswa],['id_perwalian'=> $id_perwalian]);
+        return view ('content.prosesfpp1', compact("Mahasiswa","id_perwalian","Matakuliah"));
         
 
+    }
+
+    /**
+     * Display a listing of the resource.
+     * @param  \App\Http\Requests\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function cariKpajax(Request $request)
+    {
+        $kp = KelasParalel::where('matakuliah_id',$request->id_mk)->get();
+        return response()->json([
+            'kp'=>$kp,
+        ]);
     }
 
      /**
@@ -59,7 +73,7 @@ class fppcontroller extends Controller
     public function AddMk(Request $request)
     {
         // $mk = Matakuliah::where('kode_matkul',$request->mk)->firstOrFail();
-            $mk = KelasParalel::join('matakuliahs','kelasparalels.matakuliah_id','=','matakuliahs.id')->where('matakuliahs.kode_matkul',$request->mk)->where('kp',$request->kp)->firstOrFail();
+            $mk = KelasParalel::join('matakuliahs','kelasparalels.matakuliah_id','=','matakuliahs.id')->where('matakuliahs.id',$request->mk)->where('kelasparalels.id',$request->kp)->firstOrFail();
          //print_r($mk);exit();
           return response()->json(['kode_matkul' => $mk->Matakuliah->kode_matkul,'nama' => $mk->Matakuliah->nama, 'kp'=>$mk->kp,'sks'=>$mk->Matakuliah->jumlah_sks,'kp_id'=>$mk->id]);
          //return response()->json(['kp'=>$mk->kode_matkul]);
@@ -76,20 +90,44 @@ class fppcontroller extends Controller
         $data = $request->daftar;
         $per = $request->perwalian;
         $id = Auth::user()->Mahasiswa->id;
+        $response = "data telah dimasukkan: ";
 
         foreach ($data as $key => $value) {
             $kp = $value[1];
-            if($value[0]=="Add")
+            if($per <=2)
             {
+                if($value[0]=="Add")
+                {
 
-                DB::table("inputmatakuliahs")->insert(
-                    ['mahasiswa_id'=>$id,'kelasparalel_id'=>$kp,'status'=>'Pending','inputperwalian_id'=> $per]);
+                    DB::table("inputmatakuliahs")->insert(
+                        ['mahasiswa_id'=>$id,'kelasparalel_id'=>$kp,'status'=>'Pending','inputperwalian_id'=> $per]);
+                }
+                elseif ($value[0] == "Del") {
+                     DB::table("inputmatakuliahs")->where('mahasiswa_id',$id)->where('kelasparalel_id',$value[1])->where('inputperwalian_id',$request->perwalian)->delete();
+                }
             }
-            elseif ($value[0] == "Del") {
-                 DB::table("inputmatakuliahs")->where('mahasiswa_id',$id)->where('kelasparalel_id',$value[1])->where('inputperwalian_id',$request->perwalian)->delete();
+            else{
+                 if($value[0]=="Add")
+                {
+                    $kelaspararel = KelasParalel::where('id',$kp)->first();
+                    $Diterima =Inputmatakuliah::where('status','Diterima')->where('kelasparalel_id',$kp)->get()->count();
+                    if($kelaspararel->kapasitas > $Diterima)
+                    {
+                        DB::table("inputmatakuliahs")->insert(
+                            ['mahasiswa_id'=>$id,'kelasparalel_id'=>$kp,'status'=>'Diterima','inputperwalian_id'=> $per]);
+                        $response .= $kelaspararel->Matakuliah->nama ." diterima, ";
+
+                    }
+                    else{
+                        $response .= $kelaspararel->Matakuliah->nama ." ditolak, ";
+                    }
+                }
+                elseif ($value[0] == "Del") {
+                     DB::table("inputmatakuliahs")->where('mahasiswa_id',$id)->where('kelasparalel_id',$value[1])->where('inputperwalian_id',$request->perwalian)->delete();
+                }
             }
         }
-        return response()->json(['response'=>"data telah dimasukkan"]);
+        return response()->json(['response'=>$response]);
 
     }
 

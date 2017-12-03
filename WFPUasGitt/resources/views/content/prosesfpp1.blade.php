@@ -1,7 +1,7 @@
 @extends('layouts.menumahasiswa')
 
 @section('content')
-	<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+	
 
 <div id="page-wrapper">
 	<div class="row">
@@ -43,22 +43,24 @@
 					</thead>
 					<tbody>
 						@foreach ($Mahasiswa->KelasParalels as $mk)
-						<tr>
-							<td>{{ $mk->Matakuliah->kode_matkul }}</td>
-							<td>{{ $mk->Matakuliah->nama }}</td>
-							<td>{{ $mk->kp }}</td>
-							<td>{{ $mk->Matakuliah->jumlah_sks}}</td>
-					
-								<td class="td-actions">
-								@if($mk->pivot->inputperwalian_id == $id_perwalian[0])
-							
-									<a href="javascript:;" class="btn btn-small" id='{{$mk->id}}' onclick="DeleteKelas(this)">
-										<i class="btn-icon-only icon-remove"></i>										
-									</a>
-								@endif
+							@if($mk->pivot->status != "Ditolak")
+							<tr>
+								<td>{{ $mk->Matakuliah->kode_matkul }}</td>
+								<td>{{ $mk->Matakuliah->nama }}</td>
+								<td>{{ $mk->kp }}</td>
+								<td>{{ $mk->Matakuliah->jumlah_sks}}</td>
+						
+									<td class="td-actions">
+									@if($mk->pivot->inputperwalian_id == $id_perwalian[0] )
+										@if($id_perwalian[0]<=2)
+										<a href="javascript:;" class="btn btn-small" id='{{$mk->id}}' onclick="DeleteKelas(this)">
+											<i class="btn-icon-only icon-remove"></i></a>
+										@endif
+									@endif
 
-								</td>
-						</tr>
+									</td>
+							</tr>
+							@endif
 					@endforeach
 						<tr>
 							<td colspan="3" style="text-align: center;">Jumlah SKS</td>
@@ -71,12 +73,26 @@
 		<br>
 		<div>
 			@if($id_perwalian[0]>0)
+			<datalist id="matkuls">
+				  <!-- <option value="Internet Explorer"> -->
+						@foreach ($Matakuliah as $mk)
+							<option value="{{$mk->nama .'('.$mk->kode_matkul.')'}}" id="{{$mk->id}}"></option>
+						@endforeach
+			</datalist>
+			<datalist id="kps">
+				  <option value="Internet Explorer">
+			</datalist>
 
 			<form style="margin: 0 auto; width: 570px;" >
-				<label style="float: left; margin: 10px;">Nomor MK</label>				
-				<input type="text" name="mk" class="span2" id="idmk" style="float:left; margin: 10px;">
+				<label style="float: left; margin: 10px;">Nomor MK</label>
+				<input list="matkuls" name="matkul" id="idmk" class="span2" style="float:left; margin: 10px;">				
+				<!-- <input type="text" name="mk" class="span2" id="idmk" style="float:left; margin: 10px;"> -->
 				<label style="float: left; margin: 10px;">KP</label>
-				<input type="text" name="kp" class="span1" id="idkp" style="float: left; margin: 10px;">
+				<input list="kps" name="kp" class="span1" id="idkp" style="float: left; margin: 10px;">
+
+				
+				
+
 				<input type="button" value="Add" onclick="AddKelas()" class="btn btn-primary" style="float: left; margin: 10px;">
 				<input type="button" value="Save" onclick="SaveKelas()" class="btn btn-primary" style="margin: 10px;">
 			</form>
@@ -91,25 +107,32 @@
 	var idPerwalian = {{$id_perwalian[0]}}; //ini FPP 1 atau 2 atau KK???
 
 	function AddKelas(){
+		var mk = datalistFind('matkuls','idmk');
+		var dtmk = document.getElementById("matkuls");
+		var kp = datalistFind('kps','idkp');
+		var dtkp = document.getElementById("kps");
+
 		 $.ajax({
                 url: "{{ url('/AddMatkul') }}",
                 type: 'POST',
-                data: { mk: $("#idmk").val(), kp:$("#idkp").val(), _token:'{!! csrf_token()!!}'},
+                data: { mk: dtmk.options[mk].id, kp:dtkp.options[kp].id, _token:'{!! csrf_token()!!}'},
                 success: function(response)
                 {
                 	//alert(response['kp']);
                     var table = document.getElementById("tMatkul");
-				    var row = table.insertRow(-1); //-1 berarti paling bawah
-				    var cell1 = row.insertCell(0);
-				    var cell2 = row.insertCell(1);
-				    var cell3 = row.insertCell(2);
-				    var cell4 = row.insertCell(3);
-				    var cell5 = row.insertCell(4);
-				    cell1.innerHTML = response['kode_matkul'];
-				    cell2.innerHTML = response['nama'];
-				    cell3.innerHTML = response['kp'];
-				    cell4.innerHTML = response['sks'];
-				    cell5.innerHTML = "button";
+                    $('#tMatkul tr:last').before("<tr><td>"+response['kode_matkul']+"</td><td>"+response['nama']+"</td><td>"+response['kp']+"</td><td>"+response['sks']+"</td><td><a href='javascript:;' class='btn btn-small' id='"+response["kp_id"]+
+				    	"' onclick='DeleteKelas(this)'><i class='btn-icon-only icon-remove'></i></a></td></tr>")
+				    // var row = table.insertRow(-1); //-1 berarti paling bawah
+				    // var cell1 = row.insertCell(0);
+				    // var cell2 = row.insertCell(1);
+				    // var cell3 = row.insertCell(2);
+				    // var cell4 = row.insertCell(3);
+				    // var cell5 = row.insertCell(4);
+				    // cell1.innerHTML = ;
+				    // cell2.innerHTML = response['nama'];
+				    // cell3.innerHTML = response['kp'];
+				    // cell4.innerHTML = response['sks'];
+				    // cell5.innerHTML = "";
 		 			kelas.push(["Add",response["kp_id"]]);
 		 			//alert(kelas);
                 }
@@ -133,6 +156,68 @@
                 	kelas = new Array();
                 }
             });
+	}
+
+	document.getElementById('idmk').addEventListener('input', function () {
+	 var x = document.getElementById("matkuls");
+	 var y = document.getElementById("idmk");
+	   for (i = 0; i < x.options.length; i++) {
+	        if(x.options[i].value == y.value)
+	        {
+	        	 //alert();
+	        	$.ajax({
+                url: "{{ url('/FindKp') }}",
+                type: 'POST',
+                data: { id_mk: x.options[i].id, _token:'{!! csrf_token()!!}'},
+                success: function(response)
+                {               
+                	document.getElementById('kps').innerHTML = '';
+                	var arkp = response['kp'];
+                	//arkp.forEach(AddOption);
+                	populate_datalist_from_array('kps', arkp);
+                }
+            });
+	        }
+	       
+	    }
+	});
+
+	function datalistFind(datalst, lst){
+		var x = document.getElementById(datalst);
+	 	var y = document.getElementById(lst);
+	 	 for (i = 0; i < x.options.length; i++) {
+	        if(x.options[i].value == y.value)
+	        {
+	        	return i;
+	        }
+	    }
+	    return -1;
+	}
+
+	function AddOption(item,index)
+	{
+		kp = document.getElementById("idkp");
+		kp.innerHTML = kp.innerHTML + "<option value='"+ item['kp']+"' id='"+ item['id']+"' ></option>";
+		alert(item['kp']);
+	}
+	function populate_datalist_from_array(list_id, list_str)
+	{
+	    clearChildren( list_id );
+	    var arr = eval ( list_str );
+	    for (var i = 0; i < arr.length; i++) {
+	        var opt = document.createElement('option');
+	        opt.id = arr[i]['id'];
+	        opt.value = arr[i]['kp'];
+	        document.getElementById(list_id).appendChild(opt);
+	    }
+	}
+
+	function clearChildren( parent_id ) {
+	    var childArray = document.getElementById( parent_id ).children;
+	    if ( childArray.length > 0 ) {
+	        document.getElementById( parent_id ).removeChild( childArray[ 0 ] );
+	        clearChildren( parent_id );
+	    }
 	}
 	</script>
 
