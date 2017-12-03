@@ -25,12 +25,16 @@
 						<h4>Berita Terbaru</h4>
 						<blockquote>
 							<dl class="dl-horizontal">
-								<dt>FPP 1</dt>
+							@foreach($listperwalians as $perwalians)							
+							<dt>{{$perwalians->nama}}</dt>
+							<dd>{{$perwalians->tanggal_mulai .' s.d. '.$perwalians->tanggal_selesai}}</dd>
+							@endforeach	
+								<!-- <dt>FPP 1</dt>
 								<dd>25/Jul/2017 00:00:00 s.d. 25/Jul/2017 15:00:00</dd>
 								<dt>FPP 2</dt>
 								<dd>27/Jul/2017 20:00:00 s.d. 28/Jul/2017 13:00:00</dd>
 								<dt>Kasus Khusus</dt>
-								<dd>31/Jul/2017 06:00:00 s.d. 31/Jul/2017 13:00:00</dd>
+								<dd>31/Jul/2017 06:00:00 s.d. 31/Jul/2017 13:00:00</dd> -->
 							</dl>
 						</blockquote>
 						<hr>

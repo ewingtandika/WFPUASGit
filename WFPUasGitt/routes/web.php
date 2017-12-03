@@ -33,9 +33,7 @@ Route::get('/layoutdosen', function () {
 
 Route::get('/informasimatakuliah', 'MatakuliahController@index');
 
-Route::get('/mainmahasiswa', function () {
-    return view('/content/mainmahasiswa');
-});
+Route::get('/mainmahasiswa', 'InputPerwalianController@beranda');
 
 
 // Route::get('/fpp1', function () {

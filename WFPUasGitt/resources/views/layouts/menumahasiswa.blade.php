@@ -120,9 +120,10 @@
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Home</a>
+                            <a href="{{ url('/mainmahasiswa') }}"><i class="fa fa-dashboard fa-fw"></i> Home</a>
                         </li>
                         
+                        @if(!Auth::guest())
                         @if ((Auth::user()->Dosen))
                             <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i>Matakuliah yang diajarkan</a>
@@ -145,7 +146,7 @@
                                 <a href="#"><i class="fa fa-wrench fa-fw"></i>Pengaturan FPP</a>
                             </li>
                         @endif
-                        
+                        @endif
                         <li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Jadwal Mata Kuliah<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">

@@ -71,6 +71,18 @@ class InputPerwalianController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function beranda()
+    {
+        $listperwalians = Inputperwalian::all();
+
+        return view('content.mainmahasiswa',compact('listperwalians'));
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

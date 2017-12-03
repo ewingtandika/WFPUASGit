@@ -20,7 +20,7 @@
 				Jumlah SKS maksimum yang dapat diambil:
 			</div>
 			<div style="text-align: left; width: 49%; display: inline-block;">
-				<b>{{ $Mahasiswa->nrp .'('.$Mahasiswa->id}}<br>
+				<b>{{ $Mahasiswa->nrp}}<br>
 					{{ Auth::user()->name}}<br>
 				24</b>
 			</div>
