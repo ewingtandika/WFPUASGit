@@ -14,7 +14,7 @@ class InputMatakuliahsTableSeeder extends Seeder
     public function run()
     {
         $faker = faker::create();
-        foreach (range(1,15) as $index) {
+        foreach (range(1,50) as $index) {
             DB::table('inputmatakuliahs')->insert([
                 'mahasiswa_id'=> $index,
                 'kelasparalel_id'=>1,

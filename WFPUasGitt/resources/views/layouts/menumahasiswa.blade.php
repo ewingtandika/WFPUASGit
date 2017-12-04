@@ -53,6 +53,8 @@
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
+                <li id="date" style="margin-right: 10px; font-weight: bold; font-size: 15px;"></li>
+                <li id="clock" style=" font-weight: bold; font-size: 15px;"></li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
@@ -151,10 +153,10 @@
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Jadwal Mata Kuliah<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="flot.html">Jadwal Kuliah Semester Ini</a>
+                                    <a href="{{ url('jadwalmatakuliahsemester.html') }}.html">Jadwal Kuliah Semester Ini</a>
                                 </li>
                                 <li>
-                                    <a href="morris.html">Semua Jadwal Mata Kuliah</a>
+                                    <a href="{{ url('jadwalmatakuliah.html') }}.html">Semua Jadwal Mata Kuliah</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -177,6 +179,50 @@
     <!-- /#wrapper -->
 
     <!-- jQuery -->
+    <script type="text/javascript">
+        function showTime() {
+            var a_p = "";
+            var today = new Date();
+            var curr_hour = today.getHours();
+            var curr_minute = today.getMinutes();
+            var curr_second = today.getSeconds();
+            if (curr_hour < 12) {
+                a_p = "AM";
+            } else {
+                a_p = "PM";
+            }
+            if (curr_hour == 0) {
+                curr_hour = 12;
+            }
+            if (curr_hour > 12) {
+                curr_hour = curr_hour - 12;
+            }
+            curr_hour = checkTime(curr_hour);
+            curr_minute = checkTime(curr_minute);
+            curr_second = checkTime(curr_second);
+
+            var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+            var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum&#39;at', 'Sabtu'];
+            var date = new Date();
+            var day = date.getDate();
+            var month = date.getMonth();
+            var thisDay = date.getDay(),
+            thisDay = myDays[thisDay];
+            var yy = date.getYear();
+            var year = (yy < 1000) ? yy + 1900 : yy;
+            document.getElementById('date').innerHTML= thisDay + ', ' + day + ' ' + months[month] + ' ' + year;
+            document.getElementById('clock').innerHTML=curr_hour + ":" + curr_minute + ":" + curr_second + " " + a_p;
+        }
+        function checkTime(i) {
+            if (i < 10) {
+                i = "0" + i;
+            }
+            return i;
+        }
+
+
+        setInterval(showTime, 500);
+    </script>
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
 
     <!-- Bootstrap Core JavaScript -->
