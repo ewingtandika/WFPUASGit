@@ -19,20 +19,24 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-// Route::get('/layoutmahasiswa', function () {
-//     return view('/layouts/menumahasiswa');
-// });
+Route::get('/layoutmahasiswa', function () {
+    return view('/layouts/menumahasiswa');
+});
 
-// Route::get('/layoutadmin', function () {
-//     return view('/layouts/menuadmin');
-// });
+Route::get('/layoutadmin', function () {
+    return view('/layouts/menuadmin');
+});
 
-// Route::get('/layoutdosen', function () {
-//     return view('/layouts/menudosen');
-// });
+Route::get('/layoutdosen', function () {
+    return view('/layouts/menudosen');
+});
 
 Route::get('/informasimatakuliah', 'MatakuliahController@index');
 
+Route::get('/jadwalmatakuliah', 'MatakuliahController@jadwal');
+
+Route::get('/jadwalmatakuliahsemester', 'MatakuliahController@jadwalsemester');
+Route::post('/CariJadwal', 'MatakuliahController@findjadwal');
 Route::get('/mainmahasiswa', 'InputPerwalianController@beranda');
 
 
@@ -41,10 +45,10 @@ Route::get('/mainmahasiswa', 'InputPerwalianController@beranda');
 // });
 
 Route::resource('perwalian', 'MatakuliahController');
-Route::get('/fpp', 'fppcontroller@index')->middleware('mahasiswamiddleware');
+Route::get('/fpp', 'fppcontroller@index');
 Route::post('/FindKp','fppcontroller@cariKpajax');
-Route::get('/hasilfpp', 'hasilfppcontroller@index')->middleware('mahasiswamiddleware');
-Route::get('/update-perwalian','InputPerwalianController@tampil')->middleware('adminmiddleware');
+Route::get('/hasilfpp', 'hasilfppcontroller@index');
+Route::get('/update-perwalian','InputPerwalianController@tampil');
 
 Route::post('/CariPerwalian', 'MatakuliahController@find');
 Route::get('/CariPerwalian', 'MatakuliahController@index');
@@ -55,15 +59,15 @@ Route::post('/update-perwalian','InputPerwalianController@ubah');
 
 
 //Kresna
-Route::get('/adminpage', 'PagesController@adminpage')->middleware('adminmiddleware');
-Route::get('/tambah-kelas', 'PagesController@tambahkelaspage')->middleware('adminmiddleware');
-Route::get('/admin-listkelas', 'AdminKelasController@listMatkul')->middleware('adminmiddleware');
-Route::get('/delete-kelas/{id}', 'AdminKelasController@destroy')->middleware('adminmiddleware');
-Route::get('/admin-inputperwalian', 'PagesController@admininputperwalian')->middleware('adminmiddleware');
-Route::get('/list-perwalian', 'InputPerwalianController@listMatkul')->middleware('adminmiddleware');
-Route::get('/delete-perwalian/{id}', 'InputPerwalianController@destroy')->middleware('adminmiddleware');
-Route::get('/list-matkul', 'AdminController@listMatkul')->middleware('adminmiddleware');
-Route::get('/delete-matkul/{id}', 'AdminController@destroy')->middleware('adminmiddleware');
+Route::get('/adminpage', 'PagesController@adminpage');
+Route::get('/tambah-kelas', 'PagesController@tambahkelaspage');
+Route::get('/admin-listkelas', 'AdminKelasController@listMatkul');
+Route::get('/delete-kelas/{id}', 'AdminKelasController@destroy');
+Route::get('/admin-inputperwalian', 'PagesController@admininputperwalian');
+Route::get('/list-perwalian', 'InputPerwalianController@listMatkul');
+Route::get('/delete-perwalian/{id}', 'InputPerwalianController@destroy');
+Route::get('/list-matkul', 'AdminController@listMatkul');
+Route::get('/delete-matkul/{id}', 'AdminController@destroy');
 
 Route::post('/simpan-data-kategori', 'KategoriController@store');
 Route::post('/simpan-inputperwalian', 'InputPerwalianController@store');

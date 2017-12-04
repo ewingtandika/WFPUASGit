@@ -20,7 +20,7 @@ class UsersTableSeeder extends Seeder
         */
 
         //manggil faker
-        factory(App\User::class, 40)->create();
+        factory(App\User::class, 140)->create();
 //         update users u inner join administrasis m on u.id = m.user_id
 // set u.nomorinduk = m.npk
     }
