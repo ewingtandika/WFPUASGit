@@ -26,4 +26,9 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
     }
+
+    public function pagenotfound()
+    {
+        return view('content.pagenotfound');
+    }
 }
