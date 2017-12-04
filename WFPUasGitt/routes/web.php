@@ -35,8 +35,6 @@ Route::get('/informasimatakuliah', 'MatakuliahController@index');
 
 Route::get('/jadwalmatakuliah', 'MatakuliahController@jadwal');
 
-Route::get('pagenotfound',['as' => 'notfound', 'uses' => 'HomeController@pagenotfound']);
-
 Route::get('/jadwalmatakuliahsemester', 'MatakuliahController@jadwalsemester');
 Route::post('/CariJadwal', 'MatakuliahController@findjadwal');
 Route::get('/mainmahasiswa', 'InputPerwalianController@beranda');
@@ -53,25 +51,28 @@ Route::get('/hasilfpp', 'hasilfppcontroller@index');
 Route::get('/update-perwalian','InputPerwalianController@tampil');
 
 Route::post('/CariPerwalian', 'MatakuliahController@find');
-Route::get('/CariPerwalian', 'MatakuliahController@index');
 Route::post('/AddMatkul','fppcontroller@AddMk');
 Route::post('/SaveMatkul','fppcontroller@SaveMk');
 Route::post('/update-perwalian','InputPerwalianController@ubah');
 
 
 
-//Kresna
-Route::get('/adminpage', 'PagesController@adminpage');
-Route::get('/tambah-kelas', 'PagesController@tambahkelaspage');
-Route::get('/admin-listkelas', 'AdminKelasController@listMatkul');
+
+Route::get('/adminlistkelas', 'AdminKelasController@listMatkul');
 Route::get('/delete-kelas/{id}', 'AdminKelasController@destroy');
-Route::get('/admin-inputperwalian', 'PagesController@admininputperwalian');
-Route::get('/list-perwalian', 'InputPerwalianController@listMatkul');
+
+Route::get('/listperwalian', 'InputPerwalianController@listMatkul');
 Route::get('/delete-perwalian/{id}', 'InputPerwalianController@destroy');
-Route::get('/list-matkul', 'AdminController@listMatkul');
+
+Route::get('/listmatkul', 'AdminController@listMatkul');
 Route::get('/delete-matkul/{id}', 'AdminController@destroy');
 
-Route::post('/simpan-data-kategori', 'KategoriController@store');
-Route::post('/simpan-inputperwalian', 'InputPerwalianController@store');
+
+//halaman
+Route::get('/adminpage', 'PagesController@adminpage');
+Route::get('/tambah-kelas', 'PagesController@tambahkelaspage');
+Route::get('/tambah-perwalian', 'PagesController@admininputperwalian');
+
 Route::post('/simpan-kelas', 'AdminKelasController@store');
 Route::post('/simpan-matkul', 'AdminController@store');
+Route::post('/simpan-inputperwalian', 'InputPerwalianController@store');
