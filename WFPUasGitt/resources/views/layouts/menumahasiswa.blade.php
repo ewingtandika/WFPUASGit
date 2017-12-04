@@ -57,36 +57,27 @@
                 <li id="clock" style=" font-weight: bold; font-size: 15px;"></li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
+                       <i class="fa fa-clock-o fa-fw"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-alerts">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-comment fa-fw"></i> FPP 1: Submited
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        
-                    </ul>
-                    <!-- /.dropdown-alerts -->
-                </li>
+                    <!-- /.dropdown-alerts
+                <!-- </li>  -->
                 <!-- /.dropdown -->
-                <li class="dropdown">
+               
+                    
+                        <!-- <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li> -->
+                        <!-- li class="divider"></li> -->
+                        @if (Auth::guest())
+                            <!-- <li><a href="{{ route('login') }}">Login</a>                                          
+                            </li> -->
+                        @else
+                         <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                        </li>
-                        <li class="divider"></li>
-                        @if (Auth::guest())
-                            <li><a href="{{ route('login') }}">Login</a>                                          
-                            </li>
-                        @else
+                        <ul class="dropdown-menu dropdown-user">
                             <li><a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -96,12 +87,14 @@
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
-                        </li>
+                            </li>
+                        </ul>
+                </li>
+
                         @endif
                         
-                    </ul>
                     <!-- /.dropdown-user -->
-                </li>
+                
                 <li>
                     @if (Auth::guest())
 
