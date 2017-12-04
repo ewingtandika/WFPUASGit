@@ -148,29 +148,46 @@
                             </li>
                         @elseif((Auth::user()->Administrasi))
                             <li>
-                            <a href="{{ url('/fpp1') }}"><i class="fa fa-table fa-fw"></i> Register Mahasiswa / Dosen</a>
+                                <a href="#"><i class="fa fa-university fa-fw"></i> Perwalian<span class="fa arrow"></span></a>
+                                    <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="{{ url('/tambah-perwalian') }}">Buat Jadwal Perwalian</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('/listperwalian') }}">Daftar Perwalian</a>
+                                    </li>
+                                </ul>
                             </li>
                             <li>
-                                <a href="#"><i class="fa fa-wrench fa-fw"></i>Pengaturan FPP</a>
+                            <a href="#"><i class="fa fa-book"></i> Matakuliah<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="{{ url('/adminpage') }}">Tambah Mata Kuliah</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('/informasimatakuliah') }}">Informasi Mata Kuliah</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('/jadwalmatakuliah') }}">Jadwal Mata Kuliah</a>
+                                    </li>
+                                </ul>
+                                <!-- /.nav-second-level -->
                             </li>
-                        @endif
-                        @endif
-                        <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Jadwal Mata Kuliah<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="{{ url('/jadwalmatakuliahsemester') }}">Jadwal Kuliah Semester Ini</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('/jadwalmatakuliah') }}">Semua Jadwal Mata Kuliah</a>
-                                </li>
-                            </ul>
+                            
+                            <li>
+                                <a href="#"><i class="fa fa-share-alt fa-fw"></i> Kelas Paralel<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="{{ url('/tambah-kelas') }}">Tambah Kelas Paralel</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('/adminlistkelas') }}">Daftar Kelas</a>
+                                    </li>
+                                </ul>
                             <!-- /.nav-second-level -->
-                        </li>
-                        <li>
-                            <a href="{{ url('/informasimatakuliah') }}"><i class="fa fa-edit fa-fw"></i> Informasi Mata Kuliah</a>
-                        </li>
-                       
+                            </li>                    
+                        @endif
+                        @endif
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

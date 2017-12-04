@@ -44,7 +44,6 @@
                                                         </tbody>
                             </table>
                             <!-- /.table-responsive -->
-                            <button type="button" class="btn btn-primary"><i class="fa fa-angle-double-left"> Kembali</i></button>
                         </div>
                         <!-- /.panel-body -->
                     </div>

@@ -26,7 +26,6 @@
                                         <th>Nama Matakuliah</th>
                                         <th>Jumlah SKS</th>
                                         <th>Semester</th>
-                                        <th>Dosen</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -39,14 +38,12 @@
                                 <td>{{$listmatkul->nama}}</td>
                                 <td>{{$listmatkul->jumlah_sks}}</td>
                                 <td>{{$listmatkul->semester}}</td>
-                                <td></td>
                                 <td><a href='{{ url("/delete-matkul/{$listmatkul->id}") }}'>hapus</a></td>
                                 </tr>
                 @endforeach
                                 </tbody>
                             </table>
                             <!-- /.table-responsive -->
-                            <button type="button" class="btn btn-primary"><i class="fa fa-angle-double-left"> Kembali</i></button>
                         </div>
                         <!-- /.panel-body -->
                     </div>
