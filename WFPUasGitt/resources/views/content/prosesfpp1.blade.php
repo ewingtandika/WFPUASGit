@@ -111,7 +111,9 @@
 		var dtmk = document.getElementById("matkuls");
 		var kp = datalistFind('kps','idkp');
 		var dtkp = document.getElementById("kps");
-
+		//alert(mk +' ' + kp);
+		if(mk >=0 && kp >= 0)
+		{
 		 $.ajax({
                 url: "{{ url('/AddMatkul') }}",
                 type: 'POST',
@@ -133,10 +135,17 @@
 				    // cell3.innerHTML = response['kp'];
 				    // cell4.innerHTML = response['sks'];
 				    // cell5.innerHTML = "";
+				    
 		 			kelas.push(["Add",response["kp_id"]]);
+		 			document.getElementById("idkp").value='';
+		 			document.getElementById("idmk").value='';
 		 			//alert(kelas);
                 }
             });
+		}
+		else{
+			alert("data yang kamu masukkan masih salah, silahkan dicek kembali");
+		}
 	}
 	function DeleteKelas(btn) {
 		kelas.push(["Del",$(btn).attr('id')]);
@@ -146,6 +155,8 @@
 	}
 
 	function SaveKelas(){
+		if(kelas.length>0)
+		{
 		 $.ajax({
                 url: "{{ url('/SaveMatkul') }}",
                 type: 'POST',
@@ -156,6 +167,10 @@
                 	kelas = new Array();
                 }
             });
+		}
+		else{
+			alert("kamu belum memasukkan data apapun");
+		}
 	}
 
 	document.getElementById('idmk').addEventListener('input', function () {
@@ -173,8 +188,10 @@
                 {               
                 	document.getElementById('kps').innerHTML = '';
                 	var arkp = response['kp'];
+
                 	//arkp.forEach(AddOption);
                 	populate_datalist_from_array('kps', arkp);
+                	document.getElementById("idkp").value='';//arkp[0]['kp'];
                 }
             });
 	        }
