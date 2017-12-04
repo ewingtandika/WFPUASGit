@@ -61,17 +61,17 @@ class PagesController extends Controller
      public function adminpage()
     {
         //
-        return view('pages.adminpage');
+        return view('content.admintambahmatkul');
     }
     public function tambahkelaspage()
     {
         //
-        return view('pages.tambahkelaspage');
+        return view('content.admintambahkelasparalel');
     }
     public function admininputperwalian()
     {
         //
-        return view('pages.admininputperwalian');
+        return view('content.adminbuatjadwalperwalian');
     }
 
     /**
