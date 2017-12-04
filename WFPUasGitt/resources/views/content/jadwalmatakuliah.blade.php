@@ -31,15 +31,15 @@
 					<table class="table table-striped table-bordered">
 						<thead>
 							<tr>				
-								<th rowspan="2">Hari</th>
-								
-								<th align="center" colspan="2" >Jam</th>
-								
-								<th rowspan="2">Kode MK</th>
-								<th rowspan="2">Mata Kuliah</th>
-								<th rowspan="2">kp</th>
-								<th rowspan="2">Pengajar</th>
-								<th rowspan="2">Semester</th>
+								<th rowspan="2" style="text-align: center;">Hari</th>
+
+								<th colspan="2" style="text-align: center;">Jam</th>
+
+								<th rowspan="2" style="text-align: center;">Kode MK</th>
+								<th rowspan="2" style="text-align: center;">Mata Kuliah</th>
+								<th rowspan="2" style="text-align: center;">KP</th>
+								<th rowspan="2" style="text-align: center;">Pengajar</th>
+								<th rowspan="2" style="text-align: center;">Semester</th>
 							</tr>
 							<tr>
 								
