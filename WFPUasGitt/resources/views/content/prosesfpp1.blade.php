@@ -116,32 +116,37 @@
 		 $.ajax({
                 url: "{{ url('/AddMatkul') }}",
                 type: 'POST',
-                data: { mk: dtmk.options[mk].id, kp:dtkp.options[kp].id, _token:'{!! csrf_token()!!}'},
+                data: { mk: dtmk.options[mk].id, kp:dtkp.options[kp].id, ttlsks:document.getElementById("idsks").innerHTML, _token:'{!! csrf_token()!!}'},
                 success: function(response)
                 {
-                	//alert(response['kp']);
-                    var table = document.getElementById("tMatkul");
-                    $('#tMatkul tr:last').before("<tr><td>"+response['kode_matkul']+"</td><td>"+response['nama']+"</td><td>"+response['kp']+"</td><td id='sks"+response["kp_id"]+
-				    	"'>"+response['sks']+"</td><td><a href='javascript:;' class='btn btn-small' id='"+response["kp_id"]+
-				    	"' onclick='DeleteKelas(this)'><i class='btn-icon-only icon-remove'></i></a></td></tr>")
-				    // var row = table.insertRow(-1); //-1 berarti paling bawah
-				    // var cell1 = row.insertCell(0);
-				    // var cell2 = row.insertCell(1);
-				    // var cell3 = row.insertCell(2);
-				    // var cell4 = row.insertCell(3);
-				    // var cell5 = row.insertCell(4);
-				    // cell1.innerHTML = ;
-				    // cell2.innerHTML = response['nama'];
-				    // cell3.innerHTML = response['kp'];
-				    // cell4.innerHTML = response['sks'];
-				    // cell5.innerHTML = "";
-				    
-		 			kelas.push(["Add",response["kp_id"]]);
-		 			document.getElementById("idkp").value='';
-		 			document.getElementById("idmk").value='';
+                	if(response['hasil']>0)
+                	{
+	                	//alert(response['kp']);
+	                    var table = document.getElementById("tMatkul");
+	                    $('#tMatkul tr:last').before("<tr><td>"+response['kode_matkul']+"</td><td>"+response['nama']+"</td><td>"+response['kp']+"</td><td id='sks"+response["kp_id"]+
+					    	"'>"+response['sks']+"</td><td><a href='javascript:;' class='btn btn-small' id='"+response["kp_id"]+
+					    	"' onclick='DeleteKelas(this)'><i class='btn-icon-only icon-remove'></i></a></td></tr>")
+					    // var row = table.insertRow(-1); //-1 berarti paling bawah
+					    // var cell1 = row.insertCell(0);
+					    // var cell2 = row.insertCell(1);
+					    // var cell3 = row.insertCell(2);
+					    // var cell4 = row.insertCell(3);
+					    // var cell5 = row.insertCell(4);
+					    // cell1.innerHTML = ;
+					    // cell2.innerHTML = response['nama'];
+					    // cell3.innerHTML = response['kp'];
+					    // cell4.innerHTML = response['sks'];
+					    // cell5.innerHTML = "";
+					    
+			 			kelas.push(["Add",response["kp_id"]]);
+			 		
 
-		 			document.getElementById("idsks").innerHTML=parseInt(document.getElementById("idsks").innerHTML)+response['sks'];
-		 			//alert(kelas);
+			 			document.getElementById("idsks").innerHTML=parseInt(document.getElementById("idsks").innerHTML)+response['sks'];
+			 			//alert(kelas);
+		 			}
+		 			else{alert(response['message']);}
+		 				document.getElementById("idkp").value='';
+			 			document.getElementById("idmk").value='';
                 }
             });
 		}

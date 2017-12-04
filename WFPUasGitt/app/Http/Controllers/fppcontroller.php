@@ -72,10 +72,23 @@ class fppcontroller extends Controller
      */
     public function AddMk(Request $request)
     {
+
         // $mk = Matakuliah::where('kode_matkul',$request->mk)->firstOrFail();
             $mk = KelasParalel::join('matakuliahs','kelasparalels.matakuliah_id','=','matakuliahs.id')->where('matakuliahs.id',$request->mk)->where('kelasparalels.id',$request->kp)->firstOrFail();
          //print_r($mk);exit();
-          return response()->json(['kode_matkul' => $mk->Matakuliah->kode_matkul,'nama' => $mk->Matakuliah->nama, 'kp'=>$mk->kp,'sks'=>$mk->Matakuliah->jumlah_sks,'kp_id'=>$mk->id]);
+            if($request->ttlsks + $mk->Matakuliah->jumlah_sks <= Auth::user()->Mahasiswa->sks)
+            {
+                $matakuliah = Inputmatakuliah::join('kelasparalels','inputmatakuliahs.kelasparalel_id','=','kelasparalels.id')->where('inputmatakuliahs.status', '!=',"Ditolak")->where('inputmatakuliahs.mahasiswa_id',Auth::user()->Mahasiswa->id)->where('kelasparalels.matakuliah_id',$request->mk)->first();
+                if($matakuliah === null)
+                {
+                    return response()->json(['hasil'=> 1, 'kode_matkul' => $mk->Matakuliah->kode_matkul,'nama' => $mk->Matakuliah->nama, 'kp'=>$mk->kp,'sks'=>$mk->Matakuliah->jumlah_sks,'kp_id'=>$mk->id]);
+                }
+               
+                else{ return response()->json(['hasil' => 0,'message'=>'kamu sudah memasukkan mata kuliah ini atau di kp lain']);}
+            }
+            else{
+                return response()->json(['hasil' => 0,'message'=>'sks yang kamu peroleh sudah melebihi kapastias maksimum sks kamu semester ini']);
+            }
          //return response()->json(['kp'=>$mk->kode_matkul]);
     }
 
