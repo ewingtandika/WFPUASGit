@@ -7,6 +7,8 @@ use App\Matakuliah;
 use App\KelasParalel;
 use DB;
 use App\Http\Requests\PerwalianSearchRequest;
+use Illuminate\Support\Facades\Auth;
+
 
 class MatakuliahController extends Controller
 {
@@ -31,6 +33,23 @@ class MatakuliahController extends Controller
          $matakuliahs = Matakuliah::all();
         return view('content.informasimatakuliah', ['matakuliahs' => $matakuliahs]);
     }
+  public function jadwal()
+    {
+        $matakuliahs = Matakuliah::all();
+        
+      $matakuliahs = Matakuliah::select('hari','waktu_mulai', 'waktu_selesai','kode_matkul','matakuliahs.nama AS namaMK','kp','users.name AS namaDosen','semester')
+         ->join('kelasparalels','kelasparalels.matakuliah_id','=','matakuliahs.id')->join('dosens','kelasparalels.dosen_id','=','dosens.id')->join('jadwalmatakuliahs','jadwalmatakuliahs.kelasparalel_id','=','kelasparalels.id')->join('users','users.nomorinduk','=','dosens.npk')->get();
+        return view('content.jadwalmatakuliah', ['matakuliahs' => $matakuliahs]);
+    }
+
+    public function jadwalsemester()
+    {
+        $matakuliahs = Matakuliah::all();
+        
+      $matakuliahs = Matakuliah::select('hari','waktu_mulai', 'waktu_selesai','kode_matkul','matakuliahs.nama AS namaMK','kp','users.name AS namaDosen','semester')
+         ->join('kelasparalels','kelasparalels.matakuliah_id','=','matakuliahs.id')->join('dosens','kelasparalels.dosen_id','=','dosens.id')->join('jadwalmatakuliahs','jadwalmatakuliahs.kelasparalel_id','=','kelasparalels.id')->join('users','users.nomorinduk','=','dosens.npk')->where('matakuliahs.semester','=',Auth::user()->Mahasiswa->semester)->get();
+        return view('content.jadwalmatakuliah', ['matakuliahs' => $matakuliahs]);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -51,7 +70,42 @@ class MatakuliahController extends Controller
         //print_r($matakuliahs);exit();
 
     }
+/**
+     * Store a newly created resource in storage.
+     *
+     * @param  \App\Http\Requests\PerwalianSearchRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function findJadwal(PerwalianSearchRequest $request)
+    {
+        $car = $request->get('cari');
+        $matakuliahs = Matakuliah::select('hari','waktu_mulai', 'waktu_selesai','kode_matkul','matakuliahs.nama AS namaMK','kp','users.name AS namaDosen')
+         ->join('kelasparalels','kelasparalels.matakuliah_id','=','matakuliahs.id')->join('dosens','kelasparalels.dosen_id','=','dosens.id')->join('jadwalmatakuliahs','jadwalmatakuliahs.kelasparalel_id','=','kelasparalels.id')->join('users','users.nomorinduk','=','dosens.npk')->where("matakuliahs.nama",'like','%'.$car.'%')->orWhere("matakuliahs.kode_matkul",'like','%'.$car.'%')->get();
+     
 
+        //return redirect('Perwalian.index') ->with('matakuliahs', $hasil);
+        return view('content.jadwalmatakuliah', ['matakuliahs' => $matakuliahs]);
+        //print_r($matakuliahs);exit();
+
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \App\Http\Requests\PerwalianSearchRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function findJadwalSemesterIni(PerwalianSearchRequest $request)
+    {
+        $car = $request->get('cari');
+        $matakuliahs = Matakuliah::select('hari','waktu_mulai', 'waktu_selesai','kode_matkul','matakuliahs.nama AS namaMK','kp','users.name AS namaDosen')
+         ->join('kelasparalels','kelasparalels.matakuliah_id','=','matakuliahs.id')->join('dosens','kelasparalels.dosen_id','=','dosens.id')->join('jadwalmatakuliahs','jadwalmatakuliahs.kelasparalel_id','=','kelasparalels.id')->join('users','users.nomorinduk','=','dosens.npk')->where("matakuliahs.nama",'like','%'.$car.'%')->orWhere("matakuliahs.kode_matkul",'like','%'.$car.'%')->get();
+     
+
+        //return redirect('Perwalian.index') ->with('matakuliahs', $hasil);
+        return view('content.jadwalkuliahsemester', ['matakuliahs' => $matakuliahs]);
+        //print_r($matakuliahs);exit();
+
+    }
     /**
      * Show the form for creating a new resource.
      *
