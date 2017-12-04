@@ -159,10 +159,10 @@
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Jadwal Mata Kuliah<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="{{ url('jadwalmatakuliahsemester.html') }}.html">Jadwal Kuliah Semester Ini</a>
+                                    <a href="{{ url('/jadwalmatakuliahsemester') }}">Jadwal Kuliah Semester Ini</a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('jadwalmatakuliah.html') }}.html">Semua Jadwal Mata Kuliah</a>
+                                    <a href="{{ url('/jadwalmatakuliah') }}">Semua Jadwal Mata Kuliah</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
