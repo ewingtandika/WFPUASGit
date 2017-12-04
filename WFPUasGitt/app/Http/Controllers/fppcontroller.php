@@ -10,6 +10,7 @@ use App\InputMatakuliah;
 use App\Inputperwalian;
 use DB;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class fppcontroller extends Controller
 {
@@ -33,7 +34,8 @@ class fppcontroller extends Controller
     {
          //{{ Auth::user()->name }} 
             $Mahasiswa = Mahasiswa::where('user_id',Auth::user()->id)->firstOrFail();
-            $perwalian = InputPerwalian::where('status','Proses')->first();
+            date_default_timezone_set("Asia/Jakarta");
+            $perwalian = InputPerwalian::where('tanggal_mulai','<=',Carbon::now())->where('status','Belum')->first();
             if($perwalian === null){
                 $id_perwalian = [-1,''];
             }
@@ -72,6 +74,7 @@ class fppcontroller extends Controller
      */
     public function AddMk(Request $request)
     {
+
 
         // $mk = Matakuliah::where('kode_matkul',$request->mk)->firstOrFail();
             $mk = KelasParalel::join('matakuliahs','kelasparalels.matakuliah_id','=','matakuliahs.id')->where('matakuliahs.id',$request->mk)->where('kelasparalels.id',$request->kp)->firstOrFail();

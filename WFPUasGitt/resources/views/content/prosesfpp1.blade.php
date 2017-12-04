@@ -63,7 +63,8 @@
 					@endforeach
 						<tr>
 							<td colspan="3" style="text-align: center;">Jumlah SKS</td>
-							<td colspan="2" style="text-align: center;" id="idsks"><?php echo($totalsks);?></td>
+							<td colspan="2" style="text-align: center;" id="idsks"><?php echo($totalsks);
+					?></td>
 						</tr>
 					</tbody>
 				</table>

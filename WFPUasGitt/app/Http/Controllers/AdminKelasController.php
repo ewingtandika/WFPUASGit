@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\TambahClassFormRequest;
-use App\Kelasparalel;
+use App\KelasParalel;
 
 class AdminKelasController extends Controller
 {
@@ -45,7 +45,7 @@ class AdminKelasController extends Controller
             'dosen_id' =>$request->get('dosen_id')
             ));
         $tambahkelas->save();
-       return $request->all();
+        return redirect('/tambah-kelas');
     }
 
     /**
@@ -57,8 +57,8 @@ class AdminKelasController extends Controller
 
     public function listMatkul()
     {
-        $listkelass = Kelasparalel::all();
-        return view('pages.adminlistkelas', ['listkelass'=> $listkelass]);
+        $listkelass = KelasParalel::all();
+        return view('content.adminlistkelasparalel', ['listkelass'=> $listkelass]);
     }
 
     public function show($id)
@@ -101,6 +101,6 @@ class AdminKelasController extends Controller
         //
         Kelasparalel::where('id', $id)->delete();
         $listkelass = Kelasparalel::all();
-        return view('pages.adminlistkelas', ['listkelass'=> $listkelass]);
+        return view('content.adminlistkelasparalel', ['listkelass'=> $listkelass]);
     }
 }

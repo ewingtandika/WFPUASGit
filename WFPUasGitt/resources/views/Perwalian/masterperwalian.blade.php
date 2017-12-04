@@ -9,6 +9,7 @@
 		</div>
 		<!-- /.col-lg-12 -->
 	</div>
+<<<<<<< HEAD
 		<div class="span7" style="width:800px; margin:50px auto; float:none;">
 		<br>
 		<h3>Status : {{$perwalian->nama .': '. $perwalian->status}}</h3>
@@ -49,4 +50,34 @@
 		</div> <!-- /widget -->
 	</div>
 		
+=======
+		@if($wrd == '-1')
+			<h3>Status : {{$perwalian->nama .': '. $perwalian->status .' dimulai'}}</h3>
+
+		@else
+			<h3>Status : {{$perwalian->nama .': Dimulai'}}</h3>
+
+			<form action="{{url('/update-perwalian')}}" method="POST">
+		<input type="hidden" name="_token" value="{!! csrf_token() !!}"/>
+			<input type="submit" value="{{$wrd}}"></input>
+		</form>
+		@endif
+
+		<table border=1>
+		<tr><td>id</td><td>nama</td><td>tanggal_mulai</td><td>tanggal_selesai</td><td>status</td>
+		@if(count($listperwalians)>0)
+		@foreach($listperwalians as $perwalians)
+
+			<tr>
+			<td>{{$perwalians->id}}</td>
+			<td>{{$perwalians->nama}}</td>
+			<td>{{$perwalians->tanggal_mulai}}</td>
+			<td>{{$perwalians->tanggal_selesai}}</td>
+			<td>{{$perwalians->status}}</td>
+			<td></td>
+			<!-- <td><a href='{{ url("/delete-perwalian/{$perwalians->id}") }}'>hapus</a></td> -->
+			</tr>
+		@endforeach
+		@endif
+>>>>>>> df8727635d2412baf46a49a8890d465ce2747d40
 	@endsection

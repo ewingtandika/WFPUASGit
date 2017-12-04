@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\InputPerwalianFormRequest;
 use App\Inputperwalian;
 use DB;
+use Carbon\Carbon;
 
 class InputPerwalianController extends Controller
 {
@@ -26,14 +27,24 @@ class InputPerwalianController extends Controller
      */
     public function tampil()
     {
-        $perwalian = InputPerwalian::where('status','Belum')->orWhere('status','Proses')->firstOrFail();
-        if($perwalian->status == 'Belum')
+        date_default_timezone_set("Asia/Jakarta");
+        $perwalian = InputPerwalian::where('tanggal_mulai','<=',Carbon::now())->where('status','Belum')->first();
+
+         // $p = DB::table('inputperwalians')->selectRaw("select * from `inputperwalians` where '2017-12-04 22:29:46' <= tanggal_mulai and `status` = 'Belum' limit 1");
+        // $perwalian = InputPerwalian::where('id',$p[0]['id'])->first();
+
+        if($perwalian === null)
         {
-            $wrd = 'Ubah Status Menjadi Proses';
+            $wrd = '-1';
+            $perwalian = InputPerwalian::where('status','Belum')->first();
         }
         else{
-            $wrd="Ubah Status Menjadi Selesai";
+            $wrd = 'Selesaikan '.$perwalian->nama;
+
         }
+        // else{
+        //     $wrd="Ubah Status Menjadi Selesai";
+        // }
         $listperwalians = Inputperwalian::all();
 
         return view('Perwalian.masterperwalian',compact('perwalian','wrd','listperwalians'));
@@ -46,24 +57,17 @@ class InputPerwalianController extends Controller
      */
     public function ubah()
     {
-        $perwalian = InputPerwalian::where('status','Belum')->orWhere('status','Proses')->firstOrFail();
+        $perwalian = InputPerwalian::where('tanggal_mulai','<=',Carbon::now())->where('status','Belum')->first();
         if($perwalian->status == 'Belum')
         {
-            $perwalian->status = 'Proses';
-            $wrd="Ubah Status Menjadi Selesai";
+            $perwalian->status = 'Selesai';
             $perwalian->save();
-        }
-        elseif ($perwalian->status == 'Proses') {
-            $wrd ='';
-           if($perwalian->id <=2){
-            DB::select('call spSeleksiMatkul('.$perwalian->id.')');
-           $wrd = 'Ubah Status Menjadi Proses';
-           }
-           
-           $perwalian->status = "Selesai";
-            $perwalian->save();
-            $perwalian = InputPerwalian::where('status','Belum')->orWhere('status','Proses')->firstOrFail();
-           
+            if($perwalian->id <= 2)
+            {
+                DB::select('call spSeleksiMatkul('.$perwalian->id.')');
+                $perwalian = InputPerwalian::where('status','Belum')->first();
+            }           
+            $wrd = '-1';
         }
         $listperwalians = Inputperwalian::all();
         return view('Perwalian.masterperwalian',compact('perwalian','wrd','listperwalians'));
@@ -108,13 +112,14 @@ class InputPerwalianController extends Controller
             'status'=>'Belum',
             ));
         $tambahperwalian->save();
-       return $request->all();
+
+        return redirect('/tambah-perwalian');
     }
 
     public function listMatkul()
     {
         $listperwalians = Inputperwalian::all();
-        return view('pages.adminlistperwalian', ['listperwalians'=> $listperwalians]);
+        return view('content.adminlistperwalian', ['listperwalians'=> $listperwalians]);
     }
 
     /**
@@ -162,6 +167,7 @@ class InputPerwalianController extends Controller
         //
         Inputperwalian::where('id', $id)->delete();
         $listperwalians = Inputperwalian::all();
-        return view('pages.adminlistperwalian', ['listperwalians'=> $listperwalians]);
+        return view('content.adminlistperwalian', ['listperwalians'=> $listperwalians]);
     }
 }
+
