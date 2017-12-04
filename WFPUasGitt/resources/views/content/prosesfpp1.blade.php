@@ -1,8 +1,7 @@
 @extends('layouts.menumahasiswa')
 
 @section('content')
-	
-
+	<?php $totalsks = 0; ?>
 <div id="page-wrapper">
 	<div class="row">
 		<div class="col-lg-12">
@@ -48,8 +47,8 @@
 								<td>{{ $mk->Matakuliah->kode_matkul }}</td>
 								<td>{{ $mk->Matakuliah->nama }}</td>
 								<td>{{ $mk->kp }}</td>
-								<td>{{ $mk->Matakuliah->jumlah_sks}}</td>
-						
+								<td id='{{"sks".$mk->id}}'>{{ $mk->Matakuliah->jumlah_sks}}</td>
+								<?php $totalsks +=  $mk->Matakuliah->jumlah_sks;?>
 									<td class="td-actions">
 									@if($mk->pivot->inputperwalian_id == $id_perwalian[0] )
 										@if($id_perwalian[0]<=2)
@@ -64,7 +63,7 @@
 					@endforeach
 						<tr>
 							<td colspan="3" style="text-align: center;">Jumlah SKS</td>
-							<td colspan="2" style="text-align: center;">10</td>
+							<td colspan="2" style="text-align: center;" id="idsks"><?php echo($totalsks);?></td>
 						</tr>
 					</tbody>
 				</table>
@@ -122,7 +121,8 @@
                 {
                 	//alert(response['kp']);
                     var table = document.getElementById("tMatkul");
-                    $('#tMatkul tr:last').before("<tr><td>"+response['kode_matkul']+"</td><td>"+response['nama']+"</td><td>"+response['kp']+"</td><td>"+response['sks']+"</td><td><a href='javascript:;' class='btn btn-small' id='"+response["kp_id"]+
+                    $('#tMatkul tr:last').before("<tr><td>"+response['kode_matkul']+"</td><td>"+response['nama']+"</td><td>"+response['kp']+"</td><td id='sks"+response["kp_id"]+
+				    	"'>"+response['sks']+"</td><td><a href='javascript:;' class='btn btn-small' id='"+response["kp_id"]+
 				    	"' onclick='DeleteKelas(this)'><i class='btn-icon-only icon-remove'></i></a></td></tr>")
 				    // var row = table.insertRow(-1); //-1 berarti paling bawah
 				    // var cell1 = row.insertCell(0);
@@ -139,6 +139,8 @@
 		 			kelas.push(["Add",response["kp_id"]]);
 		 			document.getElementById("idkp").value='';
 		 			document.getElementById("idmk").value='';
+
+		 			document.getElementById("idsks").innerHTML=parseInt(document.getElementById("idsks").innerHTML)+response['sks'];
 		 			//alert(kelas);
                 }
             });
@@ -149,6 +151,7 @@
 	}
 	function DeleteKelas(btn) {
 		kelas.push(["Del",$(btn).attr('id')]);
+		document.getElementById("idsks").innerHTML=parseInt(document.getElementById("idsks").innerHTML)-parseInt(document.getElementById("sks"+$(btn).attr('id')).innerHTML);
 		//alert(kelas);
 	  var row = btn.parentNode.parentNode;
 	  row.parentNode.removeChild(row);
@@ -236,6 +239,8 @@
 	        clearChildren( parent_id );
 	    }
 	}
+
+	
 	</script>
 
 @endsection
