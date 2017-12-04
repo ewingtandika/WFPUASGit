@@ -54,13 +54,7 @@
 							<td> {{ $matakuliah->jumlah_sks}}</td>
 	
 			</tr>
-			@endforeach
-						<tr>
-							<td colspan="5">nanti mungkin jadi halaman</td>
-						</tr>
-						<tr>
-							<td colspan="5">yang ini mungkin jadi info halaman</td>
-						</tr>
+			@endforeach					
 					</tbody>
 				</table>
 			</div> <!-- /widget-content -->
