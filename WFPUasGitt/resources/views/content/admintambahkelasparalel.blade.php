@@ -29,7 +29,7 @@
                                             <label>Kelas Paralel</label>
                                             <input style="margin-bottom: 20px;" type="text" name="kp" required class="form-control">
                                             <label>Kapasitas</label>
-                                            <input style="margin-bottom: 20px;" type="number" name="kapasitas" required class="form-control">
+                                            <input style="margin-bottom: 20px;" type="number" min='0' name="kapasitas" required class="form-control">
                                             <label>ID Matakuliah</label>
                                             <input style="margin-bottom: 20px;" type="text" name="matakuliah_id" required class="form-control">
                                             <label>ID Dosen</label>

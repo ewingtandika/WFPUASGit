@@ -48,7 +48,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">PERWALIAN FAKULTAS TEKNIK</a>
+                <a class="navbar-brand" href="{{url('/mainmahasiswa')}}">PERWALIAN FAKULTAS TEKNIK</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -110,18 +110,24 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
+                            <!-- <div class="input-group custom-search-form">
                                 <input type="text" class="form-control" placeholder="Search...">
                                 <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </span>
-                            </div>
+                            </div> -->
                             <!-- /input-group -->
                         </li>
                         <li>
                             <a href="{{ url('/mainmahasiswa') }}"><i class="fa fa-dashboard fa-fw"></i> Home</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('/jadwalmatakuliah') }}"><i class="fa fa-tasks"></i> Jadwal Mata Kuliah</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('/informasimatakuliah') }}"><i class="fa fa-tasks"></i> Informasi Mata Kuliah</a>
                         </li>
                         
                         @if(!Auth::guest())
@@ -143,11 +149,11 @@
                             <li>
                                 <a href="#"><i class="fa fa-university fa-fw"></i> Perwalian<span class="fa arrow"></span></a>
                                     <ul class="nav nav-second-level">
-                                    <li>
+                                    <!-- <li>
                                         <a href="{{ url('/tambah-perwalian') }}">Buat Jadwal Perwalian</a>
-                                    </li>
+                                    </li> -->
                                     <li>
-                                        <a href="{{ url('/listperwalian') }}">Daftar Perwalian</a>
+                                        <a href="{{ url('/update-perwalian') }}">Daftar Perwalian</a>
                                     </li>
                                 </ul>
                             </li>
@@ -157,12 +163,8 @@
                                     <li>
                                         <a href="{{ url('/adminpage') }}">Tambah Mata Kuliah</a>
                                     </li>
-                                    <li>
-                                        <a href="{{ url('/informasimatakuliah') }}">Informasi Mata Kuliah</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('/jadwalmatakuliah') }}">Jadwal Mata Kuliah</a>
-                                    </li>
+                                   
+                                    
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>

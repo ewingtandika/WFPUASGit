@@ -19,7 +19,7 @@
 
 			<form action="{{url('/update-perwalian')}}" method="POST">
 		<input type="hidden" name="_token" value="{!! csrf_token() !!}"/>
-			<input type="submit" value="{{$wrd}}"></input>
+			<input type="submit" class="btn btn-primary" value="{{$wrd}}"></input>
 		</form>
 		@endif
 		<div class="widget stacked widget-table action-table">

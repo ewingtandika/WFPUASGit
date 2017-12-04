@@ -125,8 +125,10 @@
 	                	//alert(response['kp']);
 	                    var table = document.getElementById("tMatkul");
 	                    $('#tMatkul tr:last').before("<tr><td>"+response['kode_matkul']+"</td><td>"+response['nama']+"</td><td>"+response['kp']+"</td><td id='sks"+response["kp_id"]+
-					    	"'>"+response['sks']+"</td><td><a href='javascript:;' class='btn btn-small' id='"+response["kp_id"]+
-					    	"' onclick='DeleteKelas(this)'><i class='btn-icon-only icon-remove'></i></a></td></tr>")
+					    	"'>"+response['sks']+"</td><td><a href='javascript:;' class='btn btn-danger' id='"+response["kp_id"]+
+					    	"' onclick='DeleteKelas(this)'><i class='glyphicon glyphicon-remove fa-xs'></i></a></td></tr>")
+
+	                    
 					    // var row = table.insertRow(-1); //-1 berarti paling bawah
 					    // var cell1 = row.insertCell(0);
 					    // var cell2 = row.insertCell(1);
