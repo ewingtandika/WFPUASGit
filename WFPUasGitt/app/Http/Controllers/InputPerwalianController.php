@@ -112,13 +112,14 @@ class InputPerwalianController extends Controller
             'status'=>'Belum',
             ));
         $tambahperwalian->save();
-       return $request->all();
+
+        return redirect('/tambah-perwalian');
     }
 
     public function listMatkul()
     {
         $listperwalians = Inputperwalian::all();
-        return view('pages.adminlistperwalian', ['listperwalians'=> $listperwalians]);
+        return view('content.adminlistperwalian', ['listperwalians'=> $listperwalians]);
     }
 
     /**
@@ -166,6 +167,7 @@ class InputPerwalianController extends Controller
         //
         Inputperwalian::where('id', $id)->delete();
         $listperwalians = Inputperwalian::all();
-        return view('pages.adminlistperwalian', ['listperwalians'=> $listperwalians]);
+        return view('content.adminlistperwalian', ['listperwalians'=> $listperwalians]);
     }
 }
+

@@ -52,8 +52,8 @@
 									<td class="td-actions">
 									@if($mk->pivot->inputperwalian_id == $id_perwalian[0] )
 										@if($id_perwalian[0]<=2)
-										<a href="javascript:;" class="btn btn-small" id='{{$mk->id}}' onclick="DeleteKelas(this)">
-											<i class="btn-icon-only icon-remove"></i></a>
+										<a href="javascript:;" class="btn btn-danger" id='{{$mk->id}}' onclick="DeleteKelas(this)">
+											<i class="glyphicon glyphicon-remove fa-xs"></i></a>
 										@endif
 									@endif
 

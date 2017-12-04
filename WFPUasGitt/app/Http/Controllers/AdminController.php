@@ -47,7 +47,8 @@ class AdminController extends Controller
             'semester' =>$request->get('semester')
             ));
         $tambahkelas->save();
-       return $request->all();
+
+        return redirect('/adminpage');
 
     }
 
@@ -61,7 +62,7 @@ class AdminController extends Controller
     {
         //
         $listmatkuls = Matakuliah::all();
-        return view('pages.adminpagelist', ['listmatkul'=> $listmatkuls]);
+        return view('content.adminlistmatkul', ['listmatkul'=> $listmatkuls]);
     }
 
     public function show($id)
@@ -105,7 +106,7 @@ class AdminController extends Controller
         //
         Matakuliah::where('id', $id)->delete();
         $listmatkuls = Matakuliah::all();
-        return view('pages.adminpagelist', ['listmatkul'=> $listmatkuls]);
+        return view('content.adminlistmatkul', ['listmatkul'=> $listmatkuls]);
         //return $id;
     }
 }
