@@ -47,6 +47,7 @@ Route::get('/hasilfpp', 'hasilfppcontroller@index')->middleware('mahasiswamiddle
 Route::get('/update-perwalian','InputPerwalianController@tampil')->middleware('adminmiddleware');
 
 Route::post('/CariPerwalian', 'MatakuliahController@find');
+Route::get('/CariPerwalian', 'MatakuliahController@index');
 Route::post('/AddMatkul','fppcontroller@AddMk');
 Route::post('/SaveMatkul','fppcontroller@SaveMk');
 Route::post('/update-perwalian','InputPerwalianController@ubah');
