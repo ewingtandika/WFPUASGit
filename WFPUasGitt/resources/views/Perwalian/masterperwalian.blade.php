@@ -9,11 +9,17 @@
 		</div>
 		<!-- /.col-lg-12 -->
 	</div>
-		<h3>Status : {{$perwalian->nama .': '. $perwalian->status}}</h3>
-		<form action="{{url('/update-perwalian')}}" method="POST">
+		@if($wrd == '-1')
+			<h3>Status : {{$perwalian->nama .': '. $perwalian->status .' dimulai'}}</h3>
+
+		@else
+			<h3>Status : {{$perwalian->nama .': Dimulai'}}</h3>
+
+			<form action="{{url('/update-perwalian')}}" method="POST">
 		<input type="hidden" name="_token" value="{!! csrf_token() !!}"/>
 			<input type="submit" value="{{$wrd}}"></input>
 		</form>
+		@endif
 
 		<table border=1>
 		<tr><td>id</td><td>nama</td><td>tanggal_mulai</td><td>tanggal_selesai</td><td>status</td>
@@ -27,7 +33,7 @@
 			<td>{{$perwalians->tanggal_selesai}}</td>
 			<td>{{$perwalians->status}}</td>
 			<td></td>
-			<td><a href='{{ url("/delete-perwalian/{$perwalians->id}") }}'>hapus</a></td>
+			<!-- <td><a href='{{ url("/delete-perwalian/{$perwalians->id}") }}'>hapus</a></td> -->
 			</tr>
 		@endforeach
 		@endif
