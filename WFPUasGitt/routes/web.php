@@ -76,3 +76,7 @@ Route::get('/tambah-perwalian', 'PagesController@admininputperwalian');
 Route::post('/simpan-kelas', 'AdminKelasController@store');
 Route::post('/simpan-matkul', 'AdminController@store');
 Route::post('/simpan-inputperwalian', 'InputPerwalianController@store');
+
+
+
+Route::get('/matakuliahdosen', 'Dosen@index');
