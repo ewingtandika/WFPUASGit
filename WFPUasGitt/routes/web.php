@@ -35,6 +35,8 @@ Route::get('/informasimatakuliah', 'MatakuliahController@index');
 
 Route::get('/jadwalmatakuliah', 'MatakuliahController@jadwal');
 
+Route::get('pagenotfound',['as' => 'notfound', 'uses' => 'HomeController@pagenotfound']);
+
 Route::get('/jadwalmatakuliahsemester', 'MatakuliahController@jadwalsemester');
 Route::post('/CariJadwal', 'MatakuliahController@findjadwal');
 Route::get('/mainmahasiswa', 'InputPerwalianController@beranda');
