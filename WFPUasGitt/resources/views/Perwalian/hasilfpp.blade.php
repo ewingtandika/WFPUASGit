@@ -1,6 +1,7 @@
 @extends('layouts.menumahasiswa')
 
 @section('content')
+<?php $totalsksfpp1 = 0;$totalsksfpp2 = 0;$totalskskk = 0; ?>
 <div id="page-wrapper">
 	<div class="row">
 		<div class="col-lg-12">
@@ -20,7 +21,7 @@
 			<div style="text-align: left; width: 49%; display: inline-block;">
 					<b>{{ $Mahasiswa->nrp }}<br>
 						{{ Auth::user()->name}}<br>
-				24</b>
+				{{ $Mahasiswa->sks }}</b>
 			</div>
 		</div>
 		<div class="widget stacked widget-table action-table">
@@ -48,12 +49,12 @@
 							<td>{{ $fpp1->kp }}</td>
 							<td>{{ $fpp1->jumlah_sks }}</td>
 							<td>{{ $fpp1->status }}</td>
-							
+							<?php $totalsksfpp1 +=  $fpp1->jumlah_sks;?>
 						</tr>
 						@endforeach
 							<tr>
 							<td colspan="3" style="text-align: center;">Jumlah SKS</td>
-							<td colspan="2" style="text-align: center;">10</td>
+							<td colspan="2" style="text-align: center;"><?php echo($totalsksfpp1);?></td>
 						</tr>
 					</tbody>
 				</table>
@@ -84,14 +85,12 @@
 							<td>{{ $fpp2->kp }}</td>
 							<td>{{ $fpp2->jumlah_sks }}</td>
 							<td>{{ $fpp2->status }}</td>
-							
+							<?php $totalsksfpp2 +=  $fpp2->jumlah_sks;?>
 						</tr>
 						@endforeach
-					
-					
-						<tr>
+							<tr>
 							<td colspan="3" style="text-align: center;">Jumlah SKS</td>
-							<td colspan="2" style="text-align: center;">10</td>
+							<td colspan="2" style="text-align: center;"><?php echo($totalsksfpp2);?></td>
 						</tr>
 					</tbody>
 				</table>
@@ -122,11 +121,12 @@
 							<td>{{ $kk->kp }}</td>
 							<td>{{ $kk->jumlah_sks }}</td>
 							<td>{{ $kk->status }}</td>
-							
+							<?php $totalskskk +=  $kk->jumlah_sks;?>
 						</tr>
 						@endforeach
+							<tr>
 							<td colspan="3" style="text-align: center;">Jumlah SKS</td>
-							<td colspan="2" style="text-align: center;">10</td>
+							<td colspan="2" style="text-align: center;"><?php echo($totalskskk);?></td>
 						</tr>
 					</tbody>
 				</table>

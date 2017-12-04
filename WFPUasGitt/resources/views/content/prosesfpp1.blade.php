@@ -21,7 +21,7 @@
 			<div style="text-align: left; width: 49%; display: inline-block;">
 				<b>{{ $Mahasiswa->nrp}}<br>
 					{{ Auth::user()->name}}<br>
-				24</b>
+				{{ $Mahasiswa->sks }}</b>
 			</div>
 		</div>
 		<div class="widget stacked widget-table action-table">
