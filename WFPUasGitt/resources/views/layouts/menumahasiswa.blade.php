@@ -134,7 +134,7 @@
                         @if(!Auth::guest())
                         @if ((Auth::user()->Dosen))
                             <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i>Matakuliah yang diajarkan</a>
+                            <a href="{{ url('/matakuliahdosen') }}"><i class="fa fa-tasks"></i> Matakuliah yang diajarkan</a>
                             </li>
                         @elseif((Auth::user()->Mahasiswa))
                             <li>

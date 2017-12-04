@@ -27,28 +27,19 @@
 							<th >Kode MK</th>
 							<th >Mata Kuliah</th>
 							<th >kp</th>
-							<th >SKS</th>>
-						
-						<tr>
-				
+							<th >SKS</th>
 					</thead>
 					<tbody>
-
-	@foreach ($matakuliahs as $key => $matakuliah)
+						@foreach ($matakuliahs as $key => $matakuliah)
 						<tr>
-				<td> {{ $matakuliah->kode_matkul }}</td>
-					
-				<td> {{ $matakuliah->namaMK }}</td>
+							<td> {{ $matakuliah->kode_matkul }}</td>
 
-				<td> {{ $matakuliah->kp }}</td>
+							<td> {{ $matakuliah->namaMK }}</td>
 
-				<td> {{ $matakuliah->sks }}</td>
-	@endforeach
-						<tr>
-							<td colspan="5">nanti mungkin jadi halaman</td>
-						</tr>
-						<tr>
-							<td colspan="5">yang ini mungkin jadi info halaman</td>
+							<td> {{ $matakuliah->kp }}</td>
+
+							<td> {{ $matakuliah->sks }}</td>
+							@endforeach
 						</tr>
 					</tbody>
 				</table>
