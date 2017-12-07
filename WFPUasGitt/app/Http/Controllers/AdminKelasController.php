@@ -7,7 +7,14 @@ use App\Http\Requests\TambahClassFormRequest;
 use App\KelasParalel;
 
 class AdminKelasController extends Controller
-{
+{   
+    /**
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *

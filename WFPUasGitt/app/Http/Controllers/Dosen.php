@@ -28,7 +28,6 @@ class Dosen extends Controller
      */
     public function index()
     {
-        $matakuliahs = Matakuliah::all();
         
       $matakuliahs = Matakuliah::select('kode_matkul','matakuliahs.nama AS namaMK','kp','matakuliahs.jumlah_sks AS sks')
          ->join('kelasparalels','kelasparalels.matakuliah_id','=','matakuliahs.id')->join('dosens','kelasparalels.dosen_id','=','dosens.id')->join('users','users.nomorinduk','=','dosens.npk')->where('dosens.npk','=',Auth::user()->Dosen->npk)->get();

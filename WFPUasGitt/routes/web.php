@@ -50,7 +50,7 @@ Route::resource('perwalian', 'MatakuliahController');
 Route::get('/fpp', 'fppcontroller@index');
 Route::post('/FindKp','fppcontroller@cariKpajax');
 Route::get('/hasilfpp', 'hasilfppcontroller@index');
-Route::get('/update-perwalian','InputPerwalianController@tampil');
+Route::get('/update-perwalian','InputPerwalianController@tampil')->middleware('adminmiddleware');
 
 Route::post('/CariPerwalian', 'MatakuliahController@find');
 Route::post('/AddMatkul','fppcontroller@AddMk');
@@ -59,21 +59,20 @@ Route::post('/update-perwalian','InputPerwalianController@ubah');
 
 
 
+Route::get('/adminlistkelas', 'AdminKelasController@listMatkul')->middleware('adminmiddleware');
+Route::get('/delete-kelas/{id}', 'AdminKelasController@destroy')->middleware('adminmiddleware');
 
-Route::get('/adminlistkelas', 'AdminKelasController@listMatkul');
-Route::get('/delete-kelas/{id}', 'AdminKelasController@destroy');
+Route::get('/listperwalian', 'InputPerwalianController@listMatkul')->middleware('adminmiddleware');
+Route::get('/delete-perwalian/{id}', 'InputPerwalianController@destroy')->middleware('adminmiddleware');
 
-Route::get('/listperwalian', 'InputPerwalianController@listMatkul');
-Route::get('/delete-perwalian/{id}', 'InputPerwalianController@destroy');
-
-Route::get('/listmatkul', 'AdminController@listMatkul');
-Route::get('/delete-matkul/{id}', 'AdminController@destroy');
+Route::get('/listmatkul', 'AdminController@listMatkul')->middleware('adminmiddleware');
+Route::get('/delete-matkul/{id}', 'AdminController@destroy')->middleware('adminmiddleware');
 
 
 //halaman
-Route::get('/adminpage', 'PagesController@adminpage');
-Route::get('/tambah-kelas', 'PagesController@tambahkelaspage');
-Route::get('/tambah-perwalian', 'PagesController@admininputperwalian');
+Route::get('/adminpage', 'PagesController@adminpage')->middleware('adminmiddleware');
+Route::get('/tambah-kelas', 'PagesController@tambahkelaspage')->middleware('adminmiddleware');
+Route::get('/tambah-perwalian', 'PagesController@admininputperwalian')->middleware('adminmiddleware');
 
 Route::post('/simpan-kelas', 'AdminKelasController@store');
 Route::post('/simpan-matkul', 'AdminController@store');
@@ -81,4 +80,4 @@ Route::post('/simpan-inputperwalian', 'InputPerwalianController@store');
 
 
 
-Route::get('/matakuliahdosen', 'Dosen@index');
+Route::get('/matakuliahdosen', 'Dosen@index')->middleware('dosenmiddleware');
